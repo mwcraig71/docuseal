@@ -251,6 +251,24 @@ FactoryBot.define do
             {
               'uuid' => SecureRandom.uuid,
               'submitter_uuid' => submitter['uuid'],
+              'name' => ['Engineer Seal', field_index].compact.join(' '),
+              'type' => 'seal',
+              'required' => true,
+              'preferences' => {},
+              'areas' => [
+                {
+                  'x' => 0.7180555555555556,
+                  'y' => 0.6,
+                  'w' => 0.2,
+                  'h' => 0.1414538310412574,
+                  'attachment_uuid' => attachment.uuid,
+                  'page' => 0
+                }
+              ]
+            },
+            {
+              'uuid' => SecureRandom.uuid,
+              'submitter_uuid' => submitter['uuid'],
               'name' => ['Attachment', field_index].compact.join(' '),
               'type' => 'file',
               'required' => true,

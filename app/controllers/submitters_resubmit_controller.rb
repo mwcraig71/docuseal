@@ -54,7 +54,7 @@ class SubmittersResubmitController < ApplicationController
 
       next if value.blank?
 
-      if field['type'].in?(%w[image file initials])
+      if field['type'].in?(%w[image file initials seal])
         Array.wrap(value).each do |attachment_uuid|
           new_submitter.attachments << attachments_index[attachment_uuid].dup
         end

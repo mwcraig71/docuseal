@@ -1,0 +1,52 @@
+<%= render 'shared/turbo_modal', title: t('update_seal') do %>
+  <% options = [[t('generate'), 'generate'], [t('upload'), 'upload']] %>
+  <toggle-visible data-element-ids="<%= options.map(&:last).to_json %>" class="relative text-center block <%= turbo_native_app? ? ('mt-1.5' if turbo_native_android?) : 'mt-4' %>">
+    <div class="join">
+      <% options.each_with_index do |(label, value), index| %>
+        <span>
+          <%= radio_button_tag 'option', value, value == 'generate', class: 'peer hidden', data: { action: 'change:toggle-visible#trigger' } %>
+          <label for="option_<%= value %>" class="<%= '!rounded-s-full' if index.zero? %> btn btn-sm join-item md:w-28 peer-checked:btn-active normal-case">
+            <%= label %>
+          </label>
+        </span>
+      <% end %>
+    </div>
+  </toggle-visible>
+  <div id="generate" class="mt-3" style="<%= 'padding-inline: 18px' if turbo_native_app? %>">
+    <%= form_for @user_config, url: user_seal_path, method: :put, data: { turbo_frame: :_top }, html: { autocomplete: :off, enctype: 'multipart/form-data' } do |f| %>
+      <seal-generator-form class="block" data-settings="<%= @seal_settings.to_json %>" data-default-name="<%= current_user.full_name %>"></seal-generator-form>
+      <div class="form-control mt-4">
+        <%= f.button button_title(title: t('save'), disabled_with: t('saving')), class: 'base-button' %>
+      </div>
+    <% end %>
+  </div>
+  <div id="upload" class="hidden mt-3" style="<%= 'padding-inline: 18px' if turbo_native_app? %>">
+    <%= form_for @user_config, url: user_seal_path, method: :put, data: { turbo_frame: :_top }, html: { autocomplete: :off, enctype: 'multipart/form-data' } do |f| %>
+      <file-dropzone data-submit-on-upload="true" class="w-full">
+        <label for="seal_file" class="w-full block h-32 relative bg-base-200 hover:bg-base-200/70 rounded-md border border-base-content border-dashed">
+          <div class="absolute top-0 right-0 left-0 bottom-0 flex items-center justify-center p-2">
+            <div class="flex flex-col items-center text-center">
+              <span data-target="file-dropzone.icon">
+                <%= svg_icon('cloud_upload', class: 'w-10 h-10') %>
+              </span>
+              <span data-target="file-dropzone.loading" class="hidden">
+                <%= svg_icon('loader', class: 'w-10 h-10 animate-spin') %>
+              </span>
+              <div class="font-medium mb-1">
+                <%= t('upload_seal') %>
+              </div>
+              <div class="text-xs">
+                <span class="md:hidden"><%= t('click_to_upload') %></span>
+                <span class="hidden md:inline"><%= t('click_to_upload_or_drag_and_drop_html') %></span>
+              </div>
+            </div>
+            <input id="seal_file" name="file" class="hidden" data-action="change:file-dropzone#onSelectFiles" data-target="file-dropzone.input" type="file" accept="image/png,image/jpeg,image/jpg">
+          </div>
+        </label>
+      </file-dropzone>
+      <div class="form-control mt-4">
+        <%= f.button button_title(title: t('save'), disabled_with: t('saving')), class: 'base-button' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

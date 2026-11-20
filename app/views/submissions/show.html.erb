@@ -345,7 +345,7 @@
                       <% img_height = attachments_index[value].metadata['height'] %>
                       <img class="object-contain mx-auto" style="<%= 'max-' if img_height %>height: <%= field['type'] == 'signature' ? 100 : 50 %>px" height="<%= img_height %>" width="<%= attachments_index[value].metadata['width'] %>" src="<%= attachments_index[value].url(time: service_url_time) %>" loading="lazy" alt="<%= field['name'] || field['title'] || field['type'] %>">
                     </div>
-                  <% elsif field['type'].in?(['image', 'stamp', 'kba']) && attachments_index[value].image? %>
+                  <% elsif field['type'].in?(['image', 'stamp', 'seal', 'kba']) && attachments_index[value].image? %>
                     <% img_height = attachments_index[value].metadata['height'] %>
                     <img class="object-contain mx-auto" style="<%= 'max-' if img_height %>height: 200px" height="<%= img_height %>" width="<%= attachments_index[value].metadata['width'] %>" src="<%= attachments_index[value].url(time: service_url_time) %>" loading="lazy" alt="<%= field['name'] || field['title'] || field['type'] %>">
                   <% elsif field['type'].in?(['file', 'payment', 'image']) %>

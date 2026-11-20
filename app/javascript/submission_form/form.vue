@@ -530,6 +530,21 @@
             @focus="scrollIntoField(currentField)"
             @minimize="minimizeForm"
           />
+          <SealStep
+            v-else-if="currentField.type === 'seal'"
+            ref="currentStep"
+            :key="currentField.uuid"
+            v-model="values[currentField.uuid]"
+            :field="currentField"
+            :dry-run="dryRun"
+            :submitter="submitter"
+            :prefill-data="prefillSeal"
+            :seal-settings="sealSettings"
+            :attachments-index="attachmentsIndex"
+            :show-field-names="showFieldNames"
+            :submitter-slug="submitterSlug"
+            @attached="[attachments.push($event), scrollIntoField(currentField)]"
+          />
           <AttachmentStep
             v-else-if="currentField.type === 'file'"
             :key="currentField.uuid"
@@ -703,6 +718,7 @@ import PhoneStep from './phone_step'
 import PaymentStep from './payment_step'
 import VerificationStep from './verification_step'
 import KbaStep from './kba_step'
+import SealStep from './seal_step'
 import TextStep from './text_step'
 import NumberStep from './number_step'
 import DateStep from './date_step'
@@ -761,6 +777,7 @@ export default {
     InitialsStep,
     VerificationStep,
     KbaStep,
+    SealStep,
     InviteForm,
     MultiSelectStep,
     IconInnerShadowTop,
@@ -987,6 +1004,16 @@ export default {
       default: null
     },
     prefillInitials: {
+      type: Object,
+      required: false,
+      default: null
+    },
+    prefillSeal: {
+      type: Object,
+      required: false,
+      default: null
+    },
+    sealSettings: {
       type: Object,
       required: false,
       default: null
@@ -1430,7 +1457,7 @@ export default {
       this.currentStep = Math.min(...indexesList)
     }
 
-    if (document.body?.clientWidth >= 768 && this.expand !== true && ['signature', 'initials', 'file', 'image'].includes(this.currentField?.type)) {
+    if (document.body?.clientWidth >= 768 && this.expand !== true && ['signature', 'initials', 'seal', 'file', 'image'].includes(this.currentField?.type)) {
       this.minimizeForm()
     }
 
@@ -1749,7 +1776,7 @@ export default {
 
       const submitStepIndex = this.currentStep
 
-      const stepPromise = ['signature', 'phone', 'initials', 'payment', 'verification', 'kba'].includes(this.currentField.type)
+      const stepPromise = ['signature', 'phone', 'initials', 'seal', 'payment', 'verification', 'kba'].includes(this.currentField.type)
         ? this.$refs.currentStep.submit
         : () => Promise.resolve({})
 

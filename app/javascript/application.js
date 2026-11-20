@@ -29,6 +29,7 @@ import AutoresizeTextarea from './elements/autoresize_textarea'
 import SubmittersAutocomplete from './elements/submitter_autocomplete'
 import FolderAutocomplete from './elements/folder_autocomplete'
 import SignatureForm from './elements/signature_form'
+import SealGeneratorForm from './elements/seal_generator_form'
 import SubmitForm from './elements/submit_form'
 import ConvertUpload from './elements/convert_upload'
 import PromptPassword from './elements/prompt_password'
@@ -155,6 +156,7 @@ safeRegisterElement('autoresize-textarea', AutoresizeTextarea)
 safeRegisterElement('submitters-autocomplete', SubmittersAutocomplete)
 safeRegisterElement('folder-autocomplete', FolderAutocomplete)
 safeRegisterElement('signature-form', SignatureForm)
+safeRegisterElement('seal-generator-form', SealGeneratorForm)
 safeRegisterElement('submit-form', SubmitForm)
 safeRegisterElement('convert-upload', ConvertUpload)
 safeRegisterElement('prompt-password', PromptPassword)

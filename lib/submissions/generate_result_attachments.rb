@@ -304,7 +304,7 @@ module Submissions
 
           field_type = field['type']
 
-          if (field_type == 'image' || field_type == 'stamp') &&
+          if field_type.in?(%w[image stamp seal]) &&
              submitter.attachments.find { |a| a.uuid == value }
                       .then { |a| !a.image? || a.content_type.in?(UNSUPPORTED_IMAGE_TYPES) }
             field_type = 'file'
@@ -471,7 +471,7 @@ module Submissions
                 height: image.height * scale
               )
             end
-          when 'image', 'signature', 'initials', 'stamp', 'kba'
+          when 'image', 'signature', 'initials', 'stamp', 'seal', 'kba'
             attachment = submitter.attachments.find { |a| a.uuid == value }
 
             image =

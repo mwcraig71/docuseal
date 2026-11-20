@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { IconTextSize, IconWritingSign, IconCalendarEvent, IconPhoto, IconCheckbox, IconPaperclip, IconSelect, IconCircleDot, IconChecks, IconColumns3, IconPhoneCheck, IconLetterCaseUpper, IconCreditCard, IconRubberStamp, IconSquareNumber1, IconHeading, IconId, IconCalendarCheck, IconStrikethrough, IconUserScan } from '@tabler/icons-vue'
+import { IconTextSize, IconWritingSign, IconCalendarEvent, IconPhoto, IconCheckbox, IconPaperclip, IconSelect, IconCircleDot, IconChecks, IconColumns3, IconPhoneCheck, IconLetterCaseUpper, IconCreditCard, IconRubberStamp, IconSquareNumber1, IconHeading, IconId, IconCalendarCheck, IconStrikethrough, IconUserScan, IconRosette } from '@tabler/icons-vue'
 
 export default {
   name: 'FiledTypeDropdown',
@@ -112,6 +112,7 @@ export default {
         radio: this.t('radio'),
         cells: this.t('cells'),
         stamp: this.t('stamp'),
+        seal: this.t('seal'),
         payment: this.t('payment'),
         phone: this.t('phone'),
         verification: this.t('verify_id'),
@@ -133,6 +134,7 @@ export default {
         radio: this.t('radio_field'),
         cells: this.t('cells_field'),
         stamp: this.t('stamp_field'),
+        seal: this.t('seal_field'),
         payment: this.t('payment_field'),
         phone: this.t('phone_field'),
         verification: this.t('verify_id'),
@@ -157,6 +159,7 @@ export default {
         select: IconSelect,
         cells: IconColumns3,
         stamp: IconRubberStamp,
+        seal: IconRosette,
         payment: IconCreditCard,
         phone: IconPhoneCheck,
         verification: IconId,

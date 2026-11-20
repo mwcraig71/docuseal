@@ -383,6 +383,14 @@ en: &en
   unable_to_save_initials: Unable to save initials.
   initials_has_been_saved: Initials have been saved.
   initials_has_been_removed: Initials have been removed.
+  professional_seal: Professional Seal
+  update_seal: Update Seal
+  generate: Generate
+  upload_seal: Upload seal image
+  unable_to_save_seal: Unable to save seal.
+  seal_has_been_saved: Seal has been saved.
+  seal_has_been_removed: Seal has been removed.
+  seal_description: Store your engineering or professional seal to apply it to documents next to your signature. Upload a scan of your physical stamp or generate a digital seal from your state's template.
   change_password: Change Password
   two_factor_authentication: Two-Factor Authentication
   2fa_is_not_configured: 2FA is not configured

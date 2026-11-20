@@ -23,6 +23,8 @@
 class UserConfig < ApplicationRecord
   SIGNATURE_KEY = 'signature'
   INITIALS_KEY = 'initials'
+  SEAL_KEY = 'seal'
+  SEAL_SETTINGS_KEY = 'seal_settings'
   RECEIVE_COMPLETED_EMAIL = 'receive_completed_email'
   RECEIVE_DECLINED_EMAIL = 'receive_declined_email'
   SHOW_APP_TOUR = 'show_app_tour'

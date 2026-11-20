@@ -40,6 +40,8 @@ class SubmitFormController < ApplicationController
       initials = UserConfigs.load_initials(current_user)
 
       @prefill_initials = Submitters.build_prefill_attachment_data(@submitter, initials) if initials
+
+      load_prefill_seal
     end
 
     return unless @form_configs[:prefill_signature]
@@ -111,6 +113,13 @@ class SubmitFormController < ApplicationController
   end
 
   private
+
+  def load_prefill_seal
+    seal = UserConfigs.load_seal(current_user)
+
+    @prefill_seal = Submitters.build_prefill_attachment_data(@submitter, seal) if seal
+    @seal_settings = UserConfigs.load_seal_settings(current_user).presence
+  end
 
   def maybe_render_not_found_for_search_bot
     return unless DetectBrowserDevice.search_bot?(request.user_agent)
