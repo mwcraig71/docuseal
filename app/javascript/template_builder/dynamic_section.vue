@@ -244,6 +244,7 @@ export default {
         initials: { width: '40px', height: '32px' },
         stamp: { width: '150px', height: '80px' },
         kba: { width: '150px', height: '80px' },
+        seal: { width: '120px', height: '120px' },
         verification: { width: '150px', height: '80px' },
         image: { width: '200px', height: '100px' },
         date: { width: '100px', height: this.defaultHeight },

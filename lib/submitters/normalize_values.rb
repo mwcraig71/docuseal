@@ -70,7 +70,7 @@ module Submitters
         value_fields.each do |field|
           next if NON_PREFILLABLE_FIELD_TYPES.include?(field['type'])
 
-          if field['type'].in?(%w[initials signature image file stamp]) && value.present?
+          if field['type'].in?(%w[initials signature image file stamp seal]) && value.present?
             new_value, new_attachments =
               normalize_attachment_value(value, field, template.account, attachments, for_submitter:, purpose:)
 
@@ -255,7 +255,7 @@ module Submitters
       end
 
       extension = detected_extensions.first
-      extension = 'png' if extension.blank? && type.in?(%w[signature initials stamp image])
+      extension = 'png' if extension.blank? && type.in?(%w[signature initials stamp seal image])
 
       filename = extension.present? ? "#{type}.#{extension}" : type
 

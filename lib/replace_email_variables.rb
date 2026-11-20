@@ -130,7 +130,7 @@ module ReplaceEmailVariables
       return unless field
 
       value =
-        if field['type'].in?(%w[image signature initials stamp payment file])
+        if field['type'].in?(%w[image signature initials stamp seal payment file])
           attachment_uuid = Array.wrap(value[field['uuid']]).first
 
           attachment = submitter.attachments.find { |e| e.uuid == attachment_uuid }

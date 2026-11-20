@@ -3123,7 +3123,7 @@ export default {
       if (type === 'checkbox' || type === 'radio' || type === 'multiple') {
         area.w = pageMask.clientWidth / 30 / pageMask.clientWidth
         area.h = (pageMask.clientWidth / 30 / pageMask.clientWidth) * (pageMask.clientWidth / pageMask.clientHeight)
-      } else if (type === 'image') {
+      } else if (type === 'image' || type === 'seal') {
         area.w = pageMask.clientWidth / 5 / pageMask.clientWidth
         area.h = (pageMask.clientWidth / 5 / pageMask.clientWidth) * (pageMask.clientWidth / pageMask.clientHeight)
       } else if (type === 'signature' || type === 'stamp' || type === 'verification' || type === 'kba') {
@@ -3489,7 +3489,7 @@ export default {
             w: area.maskW / 30 / area.maskW,
             h: area.maskW / 30 / area.maskW * (area.maskW / area.maskH)
           }
-        } else if (fieldType === 'image') {
+        } else if (fieldType === 'image' || fieldType === 'seal') {
           baseArea = {
             w: area.maskW / 5 / area.maskW,
             h: (area.maskW / 5 / area.maskW) * (area.maskW / area.maskH)

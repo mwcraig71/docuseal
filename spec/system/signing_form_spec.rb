@@ -808,6 +808,54 @@ RSpec.describe 'Signing Form' do
     end
   end
 
+  context 'when the seal step' do
+    let(:template) { create(:template, account:, author:, only_field_types: %w[seal]) }
+    let(:submission) { create(:submission, template:) }
+    let(:submitter) do
+      create(:submitter, submission:, uuid: template.submitters.first['uuid'], account:)
+    end
+
+    it 'completes the form with a generated seal' do
+      visit submit_form_path(slug: submitter.slug)
+
+      find('#expand_form_button').click
+      find('select[aria-label="State"]').select('South Carolina')
+      fill_in 'Name', with: 'John Doe'
+      fill_in 'License number', with: '12345'
+
+      expect(page).to have_css('.seal-preview svg')
+
+      find('#submit_form_button').click
+
+      expect(page).to have_content('Form has been completed!')
+
+      submitter.reload
+
+      expect(submitter.completed_at).to be_present
+      expect(field_value(submitter, 'Engineer Seal')).to be_present
+    end
+
+    it 'completes the form with an uploaded seal image' do
+      visit submit_form_path(slug: submitter.slug)
+
+      find('#expand_form_button').click
+      click_button 'Upload'
+      find('#dropzone').click
+      find('input[type="file"]', visible: false).attach_file(Rails.root.join('spec/fixtures/sample-image.png'))
+
+      sleep 0.1
+
+      find('#submit_form_button').click
+
+      expect(page).to have_content('Form has been completed!')
+
+      submitter.reload
+
+      expect(submitter.completed_at).to be_present
+      expect(field_value(submitter, 'Engineer Seal')).to be_present
+    end
+  end
+
   context 'when the file step' do
     let(:template) { create(:template, account:, author:, only_field_types: %w[file]) }
     let(:submission) { create(:submission, template:) }

@@ -115,7 +115,20 @@ const en = {
   signature_is_too_small_or_simple_please_redraw: 'Signature is too small or simple. Please redraw.',
   browser_privacy_settings_block_canvas: 'Your browser privacy settings restrict use of the drawing canvas. Please use a different browser or device, or disable privacy settings that block canvas in order to sign.',
   wait_countdown_seconds: 'Wait {countdown} seconds',
-  enter_screen_reader_mode: 'Enter screen reader mode'
+  enter_screen_reader_mode: 'Enter screen reader mode',
+  seal: 'Seal',
+  my_seal: 'My Seal',
+  generate: 'Generate',
+  change: 'Change',
+  name: 'Name',
+  state: 'State',
+  profession: 'Profession',
+  license_number: 'License number',
+  discipline_optional: 'Discipline (optional)',
+  expiration_optional: 'Expiration (optional)',
+  required_statement: 'Required statement',
+  seal_name_and_license_required: 'Enter the name and license number for your seal.',
+  please_upload_seal: 'Please add your seal.'
 }
 
 const es = {

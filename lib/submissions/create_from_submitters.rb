@@ -350,7 +350,7 @@ module Submissions
       return if values.blank?
 
       template_fields.each do |f|
-        next if f['type'].in?(%w[signature image initials file])
+        next if f['type'].in?(%w[signature image initials seal file])
         next if f['submitter_uuid'] != submitter_uuid
 
         next unless values.key?(f['uuid'])
@@ -391,7 +391,7 @@ module Submissions
       field['readonly'] = attrs['readonly'] if attrs.key?('readonly')
       field['required'] = attrs['required'] if attrs.key?('required')
 
-      if attrs.key?('default_value') && !field['type'].in?(%w[signature image initials file])
+      if attrs.key?('default_value') && !field['type'].in?(%w[signature image initials seal file])
         if attrs['default_value'].present?
           field['default_value'] = Submitters::NormalizeValues.normalize_value(field, attrs['default_value'])
         else

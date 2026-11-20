@@ -106,4 +106,39 @@ RSpec.describe 'Profile Settings' do
       expect(page).to have_content('Signed in successfully')
     end
   end
+
+  context 'when managing the professional seal' do
+    it 'generates and saves a seal from a state template' do
+      click_link 'Update Seal'
+
+      within('#generate') do
+        select 'Texas', from: 'State'
+        fill_in 'Name on seal', with: 'John Doe'
+        fill_in 'License number', with: '123456'
+
+        expect(page).to have_css('[data-preview] svg')
+
+        click_button 'Save'
+      end
+
+      expect(page).to have_content('Seal has been saved.')
+      expect(UserConfigs.load_seal(user)).to be_present
+      expect(UserConfigs.load_seal_settings(user)).to include('state' => 'TX', 'license' => '123456')
+    end
+
+    it 'removes the saved seal' do
+      click_link 'Update Seal'
+
+      within('#upload') do
+        find('input[type="file"]', visible: false).attach_file(Rails.root.join('spec/fixtures/sample-image.png'))
+      end
+
+      expect(page).to have_content('Seal has been saved.')
+
+      click_button 'Remove', match: :first
+
+      expect(page).to have_content('Seal has been removed.')
+      expect(UserConfigs.load_seal(user)).to be_nil
+    end
+  end
 end

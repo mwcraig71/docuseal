@@ -67,6 +67,11 @@
       :src="stamp.url"
     >
     <img
+      v-else-if="field.type === 'seal' && seal"
+      class="object-contain mx-auto"
+      :src="seal.url"
+    >
+    <img
       v-else-if="field.type === 'kba' && kba"
       class="object-contain mx-auto"
       :src="kba.url"
@@ -287,7 +292,7 @@
 
 <script>
 import MarkdownContent from './markdown_content'
-import { IconTextSize, IconWritingSign, IconCalendarEvent, IconPhoto, IconCheckbox, IconPaperclip, IconSelect, IconCircleDot, IconChecks, IconCheck, IconColumns3, IconPhoneCheck, IconLetterCaseUpper, IconCreditCard, IconRubberStamp, IconSquareNumber1, IconId, IconUserScan } from '@tabler/icons-vue'
+import { IconTextSize, IconWritingSign, IconCalendarEvent, IconPhoto, IconCheckbox, IconPaperclip, IconSelect, IconCircleDot, IconChecks, IconCheck, IconColumns3, IconPhoneCheck, IconLetterCaseUpper, IconCreditCard, IconRubberStamp, IconSquareNumber1, IconId, IconUserScan, IconRosette } from '@tabler/icons-vue'
 
 export default {
   name: 'FieldArea',
@@ -404,6 +409,7 @@ export default {
         radio: this.t('radio'),
         cells: this.t('cells'),
         stamp: this.t('stamp'),
+        seal: this.t('seal'),
         payment: this.t('payment'),
         phone: this.t('phone'),
         verification: this.t('verify_id'),
@@ -476,6 +482,7 @@ export default {
         checkbox: IconCheckbox,
         radio: IconCircleDot,
         stamp: IconRubberStamp,
+        seal: IconRosette,
         cells: IconColumns3,
         multiple: IconChecks,
         phone: IconPhoneCheck,
@@ -493,6 +500,13 @@ export default {
     },
     stamp () {
       if (this.field.type === 'stamp') {
+        return this.attachmentsIndex[this.modelValue]
+      } else {
+        return null
+      }
+    },
+    seal () {
+      if (this.field.type === 'seal') {
         return this.attachmentsIndex[this.modelValue]
       } else {
         return null

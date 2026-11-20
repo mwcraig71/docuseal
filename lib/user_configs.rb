@@ -18,4 +18,20 @@ module UserConfigs
 
     ActiveStorage::Attachment.find_by(uuid:, record: user, name: 'initials') if uuid.present?
   end
+
+  def load_seal(user)
+    return if user.blank?
+
+    uuid = user.user_configs.find_or_initialize_by(key: UserConfig::SEAL_KEY).value
+
+    ActiveStorage::Attachment.find_by(uuid:, record: user, name: 'seal') if uuid.present?
+  end
+
+  def load_seal_settings(user)
+    return {} if user.blank?
+
+    value = user.user_configs.find_or_initialize_by(key: UserConfig::SEAL_SETTINGS_KEY).value
+
+    value.is_a?(Hash) ? value : {}
+  end
 end
