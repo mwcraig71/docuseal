@@ -1,37 +1,34 @@
 # Professional seals
 
-Engineers, surveyors, and architects can store a professional seal and apply it to documents next to their signature.
+Engineers can store a professional seal and apply it to documents next to their signature.
+
+## Where generated seals come from
+
+Generated seals are rendered by **Seal Foundry**, which holds the state-specific seal specs (layout, legend, license number format and size for each board) and the renderer. DocuSeal never stores those specs; it sends the licensee's inputs to Seal Foundry's partner API and gets back the seal image.
+
+Configure the connection with two environment variables:
+
+| Variable | What it does |
+| --- | --- |
+| `SEAL_FOUNDRY_URL` | Seal Foundry origin, for example `https://sealfoundry.com` |
+| `SEAL_FOUNDRY_API_KEY` | One of the keys in Seal Foundry's `PARTNER_API_KEYS` |
+
+Without them the generator is hidden and people upload a seal image instead. Only states Seal Foundry has approved are offered.
 
 ## Saving a seal
 
-Go to **Settings → Profile → Professional Seal → Update Seal**. There are two ways to add one:
+**Settings → Profile → Professional Seal → Update Seal**:
 
-- **Upload**: a scan or photo of your physical stamp (PNG with a transparent background works best).
-- **Generate**: pick your state and profession, then enter your name and license number. Discipline and expiration date are optional. The seal is drawn from the state's template and saved as a PNG. The settings are kept so the signing form can pre-fill them.
+- **Generate**: pick the state and fill in the fields that state's seal needs (name and license number, plus things like branch or legend where the board requires them). The preview is the actual Seal Foundry rendering. Saving stores the PNG and the inputs, so the signing form can pre-fill them.
+- **Upload**: a scan of your physical stamp (PNG with a transparent background works best).
 
 ## Placing a seal on a document
 
-In the template builder, add a **Seal** field (rosette icon) where the seal goes. Place a **Signature** and **Date** field next to or over it as your board requires.
+In the template builder, add a **Seal** field (rosette icon) where the seal goes, and place **Signature** and **Date** fields as your board requires (each state's signing rule is shown in the generator).
 
-When signing, the seal step offers:
+When signing, the seal step offers **My Seal** (the saved seal, when you are signed in as the signer), **Generate**, and **Upload**. The seal is embedded in the completed PDF like any other image field.
 
-- **My Seal**: the seal saved in your profile (shown when you are signed in as the signer).
-- **Generate**: the same generator as the profile page.
-- **Upload**: a seal image.
+## Endpoints
 
-The seal is embedded in the completed PDF like any other image field.
-
-## State templates
-
-Templates live in `app/javascript/seals/states.js`. Each state uses the common layout (state name and profession around the ring, name and license number in the center). States whose board rules have been reviewed have overrides with notes, the required digital-signing statement, and a link to the rule:
-
-| State | Differences from the common layout |
-| --- | --- |
-| TX | Star above the name; "Licensed Professional Engineer"; max 2 in; signature and date must not cover name or number (22 TAC 137.31, 137.33) |
-| CA | Profession on top, "State of California" on the bottom; branch in the center; at least 1-1/2 in; date next to the signature (16 CCR 411) |
-| FL | At least 1-7/8 in at native size; digital-signing statement required (61G15-23.002, 23.004) |
-| SC | "Licensed Professional Engineer"; at least 1-1/2 in; sign under or across the seal; statement for electronic copies (R. 49-207) |
-| PA | "Registered Professional Engineer"; 1-3/4 in (49 Pa. Code 37.58) |
-| OR | "Registered Professional Engineer"; at least 2 in; expiration date can be included (OAR 820-025-0005) |
-
-To add or correct a state, add an entry to `STATE_RULES`. The templates are original drawings that follow each board's written rule; they do not copy any board's artwork. Licensees must confirm a generated seal meets their board's current rule before using it.
+- `GET /user_seal/foundry`, `POST /user_seal/foundry/preview`: profile generator (signed-in users).
+- `GET /s/:slug/seals`, `POST /s/:slug/seals/preview`, `POST /s/:slug/seals`: signing form (same access checks as uploads). `POST /s/:slug/seals` renders the PNG server-side and stores it as the submitter's attachment.

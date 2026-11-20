@@ -120,14 +120,12 @@ const en = {
   my_seal: 'My Seal',
   generate: 'Generate',
   change: 'Change',
-  name: 'Name',
   state: 'State',
-  profession: 'Profession',
-  license_number: 'License number',
-  discipline_optional: 'Discipline (optional)',
-  expiration_optional: 'Expiration (optional)',
-  required_statement: 'Required statement',
-  seal_name_and_license_required: 'Enter the name and license number for your seal.',
+  ink_color: 'Ink color',
+  signing: 'Signing',
+  loading: 'Loading...',
+  seal_generator_is_unavailable: 'Seal generator is unavailable. Upload an image of your seal instead.',
+  seal_name_and_license_required: 'Fill in the required seal fields.',
   please_upload_seal: 'Please add your seal.'
 }
 
