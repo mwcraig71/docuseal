@@ -17,6 +17,7 @@ services:
       - key: SECRET_KEY_BASE
         generateValue: true
       # Seal Foundry partner API for state seal generation (optional; upload works without it).
+      # SEAL_FOUNDRY_URL e.g. https://sealfoundry.com, key = one of Seal Foundry's PARTNER_API_KEYS.
       - key: SEAL_FOUNDRY_URL
         sync: false
       - key: SEAL_FOUNDRY_API_KEY
