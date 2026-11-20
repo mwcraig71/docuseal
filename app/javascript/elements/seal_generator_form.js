@@ -1,119 +1,152 @@
-import { STATES, PROFESSIONS, DEFAULT_NOTES, stateRules, isReviewedState, digitalStatementFor } from '../seals/states'
-import { buildSealSvg, buildSealFile } from '../seals/generator'
+import { fetchSealStates, fetchSealPreview, defaultSealValues, missingRequired, SEAL_COLORS, debounce } from '../seals/foundry_client'
 
 const escape = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
 
-// Renders the seal generator inside a <form>. On submit it rasterizes the seal
-// into the form's file input so the regular upload endpoint stores it.
+// Seal Foundry generator for the profile page. Inputs are posted with the form
+// as seal_settings[...]; the server renders the final PNG through Seal Foundry.
 export default class extends HTMLElement {
-  connectedCallback () {
-    const settings = this.dataset.settings ? JSON.parse(this.dataset.settings) : {}
-
-    this.values = {
-      state: settings.state || this.dataset.defaultState || 'TX',
-      profession: settings.profession || 'pe',
-      name: settings.name || this.dataset.defaultName || '',
-      license: settings.license || '',
-      discipline: settings.discipline || '',
-      expiration: settings.expiration || '',
-      color: settings.color || '#111111'
-    }
-
-    this.render()
-
+  async connectedCallback () {
+    this.saved = this.dataset.settings ? JSON.parse(this.dataset.settings) : {}
     this.form = this.closest('form')
     this.form.addEventListener('submit', this.onSubmit)
+
+    this.innerHTML = '<p class="text-sm opacity-70">Loading state seals…</p>'
+
+    const { states, error } = await fetchSealStates(this.dataset.statesUrl)
+
+    this.states = states
+
+    if (!states.length) {
+      this.innerHTML = `<p class="text-sm">${escape(error || 'Seal generator is not set up.')} Use Upload to add a scan of your stamp.</p>`
+      this.form.querySelector('button[type="submit"]')?.setAttribute('disabled', 'disabled')
+
+      return
+    }
+
+    const defaultState = states.find((s) => s.code === this.saved.state) || states.find((s) => s.code === this.dataset.defaultState) || states[0]
+
+    this.stateCode = defaultState.code
+    this.color = this.saved.color || '#000000'
+    this.values = defaultSealValues(defaultState, {
+      NAME: this.dataset.defaultName,
+      ...(this.saved.state === defaultState.code ? this.saved.fields : {})
+    })
+
+    this.render()
   }
 
   disconnectedCallback () {
     this.form?.removeEventListener('submit', this.onSubmit)
   }
 
-  onSubmit = async (e) => {
-    if (this.fileReady) {
+  get state () {
+    return this.states.find((s) => s.code === this.stateCode)
+  }
+
+  onSubmit = (e) => {
+    if (!this.state) {
       return
     }
 
-    e.preventDefault()
+    const missing = missingRequired(this.state, this.values)
 
-    if (!this.values.name.trim() || !this.values.license.trim()) {
-      this.querySelector('[data-error]').classList.remove('hidden')
+    if (missing.length) {
+      e.preventDefault()
+      e.stopImmediatePropagation()
 
-      return
+      this.querySelector('[data-error]').textContent = `${missing.map((f) => f.label).join(', ')} required.`
     }
-
-    const file = await buildSealFile(this.values)
-    const transfer = new DataTransfer()
-
-    transfer.items.add(file)
-
-    this.querySelector('input[type="file"]').files = transfer.files
-
-    this.fileReady = true
-
-    this.form.requestSubmit()
-  }
-
-  input (name, label, type = 'text', placeholder = '') {
-    return `
-      <div class="form-control">
-        <label class="label" for="seal_${name}">${label}</label>
-        <input id="seal_${name}" name="seal_settings[${name}]" type="${type}" class="base-input" dir="auto" value="${escape(this.values[name])}" placeholder="${escape(placeholder)}" data-name="${name}">
-      </div>`
-  }
-
-  select (name, label, options) {
-    return `
-      <div class="form-control">
-        <label class="label" for="seal_${name}">${label}</label>
-        <select id="seal_${name}" name="seal_settings[${name}]" class="base-select" data-name="${name}">
-          ${options.map(([value, text]) => `<option value="${escape(value)}" ${value === this.values[name] ? 'selected' : ''}>${escape(text)}</option>`).join('')}
-        </select>
-      </div>`
   }
 
   render () {
+    const state = this.state
+
+    const fields = state.fields.map((f) => `
+      <div class="form-control col-span-2">
+        <label class="label" for="seal_field_${f.key}">${escape(f.label)}${f.required ? '' : ' (optional)'}</label>
+        <input id="seal_field_${f.key}" name="seal_settings[fields][${escape(f.key)}]" class="base-input" dir="auto" maxlength="${f.maxLength || 80}" value="${escape(this.values[f.key])}" data-key="${escape(f.key)}">
+        ${f.help ? `<span class="text-xs opacity-70 mt-1">${escape(f.help)}</span>` : ''}
+      </div>`).join('')
+
+    const options = (state.options || []).map((o) => `
+      <div class="form-control col-span-2">
+        <label class="label" for="seal_option_${o.key}">${escape(o.label)}</label>
+        <select id="seal_option_${o.key}" name="seal_settings[fields][${escape(o.key)}]" class="base-select" data-key="${escape(o.key)}">
+          ${o.choices.map((c) => `<option value="${escape(c)}" ${c === this.values[o.key] ? 'selected' : ''}>${escape(c)}</option>`).join('')}
+        </select>
+        ${o.help ? `<span class="text-xs opacity-70 mt-1">${escape(o.help)}</span>` : ''}
+      </div>`).join('')
+
     this.innerHTML = `
       <div class="flex justify-center mb-3">
-        <div data-preview class="w-48 h-48"></div>
+        <img data-preview class="w-48 h-48 object-contain" alt="Seal preview">
       </div>
       <div class="grid grid-cols-2 gap-3">
-        ${this.select('state', 'State', STATES.map((s) => [s.code, s.name]))}
-        ${this.select('profession', 'Profession', PROFESSIONS.map((p) => [p.key, p.title]))}
-        ${this.input('name', 'Name on seal')}
-        ${this.input('license', 'License number')}
-        ${this.input('discipline', 'Discipline (optional)', 'text', 'e.g. Civil')}
-        ${this.input('expiration', 'Expiration (optional)', 'text', 'e.g. 12/31/2027')}
-        ${this.select('color', 'Ink color', [['#111111', 'Black'], ['#1e3a8a', 'Blue'], ['#991b1b', 'Red']])}
+        <div class="form-control">
+          <label class="label" for="seal_state">State</label>
+          <select id="seal_state" name="seal_settings[state]" class="base-select" data-state>
+            ${this.states.map((s) => `<option value="${escape(s.code)}" ${s.code === this.stateCode ? 'selected' : ''}>${escape(s.name)}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-control">
+          <label class="label" for="seal_color">Ink color</label>
+          <select id="seal_color" name="seal_settings[color]" class="base-select" data-color>
+            ${SEAL_COLORS.map(([v, l]) => `<option value="${v}" ${v === this.color ? 'selected' : ''}>${l}</option>`).join('')}
+          </select>
+        </div>
+        ${fields}
+        ${options}
       </div>
-      <p data-error class="hidden text-error text-sm mt-2">Name and license number are required.</p>
-      <div data-notes class="text-sm mt-3 space-y-1"></div>
-      <input name="file" type="file" class="hidden" accept="image/png">
+      <p data-error class="text-error text-sm mt-2"></p>
+      <div class="text-sm mt-3 space-y-1">
+        ${state.signing ? `<p><span class="font-medium">Signing:</span> ${escape(state.signing)}</p>` : ''}
+        ${(state.sources || []).slice(0, 2).map((s) => `<a href="${escape(s.url)}" target="_blank" rel="noopener" class="link block">${escape(s.cite)}</a>`).join('')}
+      </div>
     `
 
-    this.querySelectorAll('[data-name]').forEach((el) => {
+    this.querySelector('[data-state]').addEventListener('change', (e) => {
+      const name = this.values.NAME
+
+      this.stateCode = e.target.value
+      this.values = defaultSealValues(this.state, { NAME: name, LICENSE_NO: this.values.LICENSE_NO })
+      this.render()
+    })
+
+    this.querySelector('[data-color]').addEventListener('change', (e) => {
+      this.color = e.target.value
+      this.preview()
+    })
+
+    this.querySelectorAll('[data-key]').forEach((el) => {
       el.addEventListener('input', () => {
-        this.values[el.dataset.name] = el.value
-        this.fileReady = false
-        this.update()
+        this.values[el.dataset.key] = el.value
+        this.preview()
       })
     })
 
-    this.update()
+    this.refresh()
   }
 
-  update () {
-    this.querySelector('[data-preview]').innerHTML = buildSealSvg(this.values).replace('<svg ', '<svg style="width:100%;height:100%" ')
+  preview = debounce(() => this.refresh())
 
-    const rules = stateRules(this.values.state, this.values.profession)
-    const notes = rules.notes || DEFAULT_NOTES
-    const statement = digitalStatementFor({ ...this.values, date: '[date]' })
+  async refresh () {
+    const fields = { ...this.values }
 
-    this.querySelector('[data-notes]').innerHTML = `
-      ${isReviewedState(this.values.state) ? '' : '<div class="font-medium">Generic template</div>'}
-      <ul class="list-disc ps-5">${notes.map((n) => `<li>${escape(n)}</li>`).join('')}</ul>
-      ${statement ? `<div class="mt-1"><span class="font-medium">Required statement:</span> ${escape(statement)}</div>` : ''}
-      ${rules.source ? `<a href="${escape(rules.source)}" target="_blank" rel="noopener" class="link">Board rule</a>` : ''}
-    `
+    if (!fields.NAME) fields.NAME = 'YOUR NAME'
+    if (!fields.LICENSE_NO) fields.LICENSE_NO = '000000'
+
+    const { url, error } = await fetchSealPreview(this.dataset.previewUrl, { state: this.stateCode, fields, color: this.color }, {
+      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content
+    })
+
+    this.querySelector('[data-error]').textContent = error || ''
+
+    if (url) {
+      const img = this.querySelector('[data-preview]')
+
+      if (img.src.startsWith('blob:')) URL.revokeObjectURL(img.src)
+
+      img.src = url
+    }
   }
 }

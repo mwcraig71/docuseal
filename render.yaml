@@ -1,0 +1,24 @@
+# Render Blueprint for this DocuSeal fork.
+# New > Blueprint in the Render dashboard, pick this repository and branch.
+# Uses SQLite and attachments on a persistent disk (requires a paid instance;
+# the free plan has no disk, so data would be lost on every restart).
+services:
+  - type: web
+    name: docuseal
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /up
+    disk:
+      name: docuseal-data
+      mountPath: /data/docuseal
+      sizeGB: 1
+    envVars:
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      # Seal Foundry partner API for state seal generation (optional; upload works without it).
+      # SEAL_FOUNDRY_URL e.g. https://sealfoundry.com, key = one of Seal Foundry's PARTNER_API_KEYS.
+      - key: SEAL_FOUNDRY_URL
+        sync: false
+      - key: SEAL_FOUNDRY_API_KEY
+        sync: false

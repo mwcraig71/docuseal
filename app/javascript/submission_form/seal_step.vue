@@ -75,79 +75,95 @@
       v-else-if="mode === 'generate'"
       class="flex flex-col md:flex-row gap-3"
     >
-      <!-- eslint-disable vue/no-v-html -- generated SVG; all user text is XML-escaped in buildSealSvg -->
       <div
-        class="w-44 h-44 mx-auto flex-none seal-preview"
-        v-html="previewSvg"
-      />
-      <!-- eslint-enable vue/no-v-html -->
-      <div class="grid grid-cols-2 gap-2 flex-grow">
-        <select
-          v-model="seal.state"
-          class="base-select !h-10 !min-h-10 text-base"
-          :aria-label="t('state')"
-        >
-          <option
-            v-for="state in states"
-            :key="state.code"
-            :value="state.code"
-          >
-            {{ state.name }}
-          </option>
-        </select>
-        <select
-          v-model="seal.profession"
-          class="base-select !h-10 !min-h-10 text-base"
-          :aria-label="t('profession')"
-        >
-          <option
-            v-for="profession in professions"
-            :key="profession.key"
-            :value="profession.key"
-          >
-            {{ profession.title }}
-          </option>
-        </select>
-        <input
-          v-model="seal.name"
-          class="base-input !h-10 text-base"
-          dir="auto"
-          :placeholder="t('name')"
-          :aria-label="t('name')"
-        >
-        <input
-          v-model="seal.license"
-          class="base-input !h-10 text-base"
-          :placeholder="t('license_number')"
-          :aria-label="t('license_number')"
-        >
-        <input
-          v-model="seal.discipline"
-          class="base-input !h-10 text-base"
-          :placeholder="t('discipline_optional')"
-          :aria-label="t('discipline_optional')"
-        >
-        <input
-          v-model="seal.expiration"
-          class="base-input !h-10 text-base"
-          :placeholder="t('expiration_optional')"
-          :aria-label="t('expiration_optional')"
-        >
-        <p
-          v-if="rules.notes?.length || digitalStatement"
-          class="col-span-2 text-xs opacity-80"
-        >
-          <span
-            v-for="(note, index) in rules.notes"
-            :key="index"
-            class="block"
-          >• {{ note }}</span>
-          <span
-            v-if="digitalStatement"
-            class="block mt-1"
-          ><b>{{ t('required_statement') }}:</b> {{ digitalStatement }}</span>
-        </p>
+        v-if="!sealStates.length"
+        class="text-sm py-4"
+      >
+        {{ isLoadingStates ? t('loading') : (statesError || t('seal_generator_is_unavailable')) }}
       </div>
+      <template v-else>
+        <img
+          v-if="previewUrl"
+          :src="previewUrl"
+          :alt="t('seal')"
+          class="w-44 h-44 mx-auto flex-none object-contain seal-preview"
+        >
+        <div
+          v-else
+          class="w-44 h-44 mx-auto flex-none"
+        />
+        <div class="grid grid-cols-2 gap-2 flex-grow content-start">
+          <select
+            :value="stateCode"
+            class="base-select !h-10 !min-h-10 text-base"
+            :aria-label="t('state')"
+            @change="selectState($event.target.value)"
+          >
+            <option
+              v-for="state in sealStates"
+              :key="state.code"
+              :value="state.code"
+            >
+              {{ state.name }}
+            </option>
+          </select>
+          <select
+            v-model="color"
+            class="base-select !h-10 !min-h-10 text-base"
+            :aria-label="t('ink_color')"
+            @change="schedulePreview"
+          >
+            <option
+              v-for="[value, label] in colors"
+              :key="value"
+              :value="value"
+            >
+              {{ label }}
+            </option>
+          </select>
+          <input
+            v-for="spec in currentState.fields"
+            :key="spec.key"
+            v-model="sealValues[spec.key]"
+            class="base-input !h-10 text-base col-span-2"
+            dir="auto"
+            :maxlength="spec.maxLength || 80"
+            :placeholder="spec.required ? spec.label : `${spec.label} (${t('optional')})`"
+            :aria-label="spec.label"
+            :title="spec.help"
+            @input="schedulePreview"
+          >
+          <select
+            v-for="option in currentState.options || []"
+            :key="option.key"
+            v-model="sealValues[option.key]"
+            class="base-select !h-10 !min-h-10 text-base col-span-2"
+            :aria-label="option.label"
+            :title="option.help"
+            @change="schedulePreview"
+          >
+            <option
+              v-for="choice in option.choices"
+              :key="choice"
+              :value="choice"
+            >
+              {{ option.label }}: {{ choice }}
+            </option>
+          </select>
+          <p
+            v-if="previewError"
+            class="col-span-2 text-sm text-red-600"
+          >
+            {{ previewError }}
+          </p>
+          <p
+            v-if="currentState.signing"
+            class="col-span-2 text-xs opacity-80"
+          >
+            <b>{{ t('signing') }}:</b> {{ currentState.signing }}
+          </p>
+        </div>
+      </template>
     </div>
     <FileDropzone
       v-else
@@ -164,8 +180,7 @@
 import FileDropzone from './dropzone'
 import MarkdownContent from './markdown_content'
 import { IconReload } from '@tabler/icons-vue'
-import { STATES, PROFESSIONS, stateRules, digitalStatementFor } from '../seals/states'
-import { buildSealSvg, buildSealFile } from '../seals/generator'
+import { fetchSealStates, fetchSealPreview, defaultSealValues, missingRequired, SEAL_COLORS, debounce } from '../seals/foundry_client'
 
 export default {
   name: 'SealStep',
@@ -222,27 +237,27 @@ export default {
   },
   emits: ['attached', 'update:model-value'],
   data () {
-    const settings = this.sealSettings || {}
-
     return {
       mode: this.prefillData ? 'saved' : 'generate',
-      seal: {
-        state: settings.state || this.field.preferences?.seal_state || 'TX',
-        profession: settings.profession || 'pe',
-        name: settings.name || this.submitter?.name || '',
-        license: settings.license || '',
-        discipline: settings.discipline || '',
-        expiration: settings.expiration || '',
-        color: settings.color || '#111111'
-      }
+      sealStates: [],
+      statesError: '',
+      isLoadingStates: true,
+      stateCode: '',
+      sealValues: {},
+      color: this.sealSettings?.color || '#000000',
+      previewUrl: '',
+      previewError: ''
     }
   },
   computed: {
-    states () {
-      return STATES
+    colors () {
+      return SEAL_COLORS
     },
-    professions () {
-      return PROFESSIONS
+    currentState () {
+      return this.sealStates.find((s) => s.code === this.stateCode) || { fields: [], options: [] }
+    },
+    sealsUrl () {
+      return this.baseUrl + `/s/${this.submitterSlug}/seals`
     },
     modes () {
       return [
@@ -250,18 +265,65 @@ export default {
         { value: 'generate', label: this.t('generate') },
         { value: 'upload', label: this.t('upload') }
       ].filter(Boolean)
-    },
-    rules () {
-      return stateRules(this.seal.state, this.seal.profession)
-    },
-    digitalStatement () {
-      return digitalStatementFor({ ...this.seal, date: new Date().toLocaleDateString() })
-    },
-    previewSvg () {
-      return buildSealSvg(this.seal).replace('<svg ', '<svg style="width:100%;height:100%" ')
     }
   },
+  created () {
+    this.schedulePreview = debounce(() => this.refreshPreview())
+  },
+  async mounted () {
+    const { states, error } = await fetchSealStates(this.sealsUrl, this.fetchOptions.headers)
+
+    this.sealStates = states
+    this.statesError = error
+    this.isLoadingStates = false
+
+    if (!states.length) {
+      if (this.mode === 'generate') this.mode = 'upload'
+
+      return
+    }
+
+    const saved = this.sealSettings || {}
+    const state = states.find((s) => s.code === saved.state) || states.find((s) => s.code === this.field.preferences?.seal_state) || states[0]
+
+    this.stateCode = state.code
+    this.sealValues = defaultSealValues(state, { NAME: this.submitter?.name, ...(saved.state === state.code ? saved.fields : {}) })
+
+    this.refreshPreview()
+  },
+  beforeUnmount () {
+    if (this.previewUrl) URL.revokeObjectURL(this.previewUrl)
+  },
   methods: {
+    selectState (code) {
+      const { NAME, LICENSE_NO } = this.sealValues
+
+      this.stateCode = code
+      this.sealValues = defaultSealValues(this.currentState, { NAME, LICENSE_NO })
+
+      this.refreshPreview()
+    },
+    sealPayload (placeholders = false) {
+      const fields = { ...this.sealValues }
+
+      if (placeholders) {
+        if (!fields.NAME) fields.NAME = 'YOUR NAME'
+        if (!fields.LICENSE_NO) fields.LICENSE_NO = '000000'
+      }
+
+      return { state: this.stateCode, fields, color: this.color }
+    },
+    async refreshPreview () {
+      const { url, error } = await fetchSealPreview(`${this.sealsUrl}/preview`, this.sealPayload(true), this.fetchOptions.headers)
+
+      this.previewError = error || ''
+
+      if (url) {
+        if (this.previewUrl) URL.revokeObjectURL(this.previewUrl)
+
+        this.previewUrl = url
+      }
+    },
     remove () {
       this.$emit('update:model-value', '')
     },
@@ -299,34 +361,21 @@ export default {
       })
     },
     async submitGenerated () {
-      const file = await buildSealFile(this.seal)
-
       if (this.dryRun) {
-        return new Promise((resolve) => {
-          const reader = new FileReader()
-
-          reader.onloadend = () => resolve(this.emitAttachment({ uuid: Math.random().toString(), url: reader.result }))
-
-          reader.readAsDataURL(file)
-        })
+        return this.emitAttachment({ uuid: Math.random().toString(), url: this.previewUrl })
       }
 
-      const formData = new FormData()
-
-      formData.append('file', file)
-      formData.append('submitter_slug', this.submitterSlug)
-      formData.append('name', 'attachments')
-      formData.append('type', 'seal')
-
-      const resp = await fetch(this.baseUrl + `/s/${this.submitterSlug}/upload`, {
+      const resp = await fetch(this.sealsUrl, {
         method: 'POST',
-        headers: { ...this.fetchOptions.headers },
-        body: formData
+        headers: { 'Content-Type': 'application/json', ...this.fetchOptions.headers },
+        body: JSON.stringify(this.sealPayload())
       })
 
       const data = await resp.json()
 
       if (!resp.ok) {
+        alert(data.error)
+
         return Promise.reject(new Error(data.error))
       }
 
@@ -341,15 +390,15 @@ export default {
         return this.submitPrefill()
       }
 
-      if (this.mode === 'generate') {
-        const isFilled = this.seal.name.trim() && this.seal.license.trim()
+      if (this.mode === 'generate' && this.sealStates.length) {
+        const missing = missingRequired(this.currentState, this.sealValues)
 
-        if (isFilled) {
+        if (!missing.length) {
           return this.submitGenerated()
-        } else if (this.field.required === true) {
-          alert(this.t('seal_name_and_license_required'))
+        } else if (this.field.required === true || missing.length < this.currentState.fields.filter((f) => f.required).length) {
+          alert(`${this.t('seal_name_and_license_required')} (${missing.map((f) => f.label).join(', ')})`)
 
-          return Promise.reject(new Error('Seal name and license number are required'))
+          return Promise.reject(new Error('Seal fields are required'))
         }
       }
 

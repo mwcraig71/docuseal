@@ -390,6 +390,7 @@ en: &en
   unable_to_save_seal: Unable to save seal.
   seal_has_been_saved: Seal has been saved.
   seal_has_been_removed: Seal has been removed.
+  seal_generator_is_unavailable: Seal generator is unavailable. Upload an image of your seal instead.
   seal_description: Store your engineering or professional seal to apply it to documents next to your signature. Upload a scan of your physical stamp or generate a digital seal from your state's template.
   change_password: Change Password
   two_factor_authentication: Two-Factor Authentication

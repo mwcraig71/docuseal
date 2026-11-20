@@ -815,15 +815,32 @@ RSpec.describe 'Signing Form' do
       create(:submitter, submission:, uuid: template.submitters.first['uuid'], account:)
     end
 
+    before do
+      allow(SealFoundry).to receive_messages(
+        configured?: true,
+        states: [{ 'code' => 'SC', 'name' => 'South Carolina',
+                   'fields' => [{ 'key' => 'NAME', 'label' => 'Name', 'required' => true },
+                                { 'key' => 'LICENSE_NO', 'label' => 'License number', 'required' => true }],
+                   'options' => [{ 'key' => 'LEGEND', 'label' => 'Legend', 'choices' => %w[LICENSED REGISTERED],
+                                   'default' => 'LICENSED' }] }]
+      )
+      allow(SealFoundry).to receive(:render) do |**kwargs|
+        if kwargs[:format] == 'png'
+          Rails.root.join('spec/fixtures/sample-image.png').binread
+        else
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4"/></svg>'
+        end
+      end
+    end
+
     it 'completes the form with a generated seal' do
       visit submit_form_path(slug: submitter.slug)
 
       find('#expand_form_button').click
-      find('select[aria-label="State"]').select('South Carolina')
       fill_in 'Name', with: 'John Doe'
       fill_in 'License number', with: '12345'
 
-      expect(page).to have_css('.seal-preview svg')
+      expect(page).to have_css('img.seal-preview[src^="blob:"]')
 
       find('#submit_form_button').click
 
@@ -833,6 +850,8 @@ RSpec.describe 'Signing Form' do
 
       expect(submitter.completed_at).to be_present
       expect(field_value(submitter, 'Engineer Seal')).to be_present
+      expect(SealFoundry).to have_received(:render)
+        .with(hash_including(state: 'SC', format: 'png', fields: hash_including('LEGEND' => 'LICENSED')))
     end
 
     it 'completes the form with an uploaded seal image' do

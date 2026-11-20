@@ -108,22 +108,44 @@ RSpec.describe 'Profile Settings' do
   end
 
   context 'when managing the professional seal' do
-    it 'generates and saves a seal from a state template' do
+    let(:texas) do
+      {
+        'code' => 'TX', 'name' => 'Texas', 'signing' => 'Seal plus signature and date.',
+        'fields' => [{ 'key' => 'NAME', 'label' => 'Name exactly as on board record', 'required' => true },
+                     { 'key' => 'LICENSE_NO', 'label' => 'License number', 'required' => true }],
+        'options' => []
+      }
+    end
+
+    before do
+      allow(SealFoundry).to receive_messages(configured?: true, states: [texas])
+      allow(SealFoundry).to receive(:render) do |**kwargs|
+        if kwargs[:format] == 'png'
+          Rails.root.join('spec/fixtures/sample-image.png').binread
+        else
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4"/></svg>'
+        end
+      end
+    end
+
+    it 'generates and saves a seal through Seal Foundry' do
       click_link 'Update Seal'
 
       within('#generate') do
         select 'Texas', from: 'State'
-        fill_in 'Name on seal', with: 'John Doe'
+        fill_in 'Name exactly as on board record', with: 'John Doe'
         fill_in 'License number', with: '123456'
 
-        expect(page).to have_css('[data-preview] svg')
+        expect(page).to have_css('img[data-preview][src^="blob:"]')
 
         click_button 'Save'
       end
 
       expect(page).to have_content('Seal has been saved.')
       expect(UserConfigs.load_seal(user)).to be_present
-      expect(UserConfigs.load_seal_settings(user)).to include('state' => 'TX', 'license' => '123456')
+      expect(UserConfigs.load_seal_settings(user)).to include('state' => 'TX',
+                                                              'fields' => include('LICENSE_NO' => '123456'))
+      expect(SealFoundry).to have_received(:render).with(hash_including(state: 'TX', format: 'png'))
     end
 
     it 'removes the saved seal' do
