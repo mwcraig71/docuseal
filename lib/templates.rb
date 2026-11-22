@@ -149,12 +149,32 @@ module Templates
   def serialize_for_builder(template)
     data = template.as_json(only: TEMPLATE_BUILDER_FIELDS)
 
-    data['documents'] = template.schema_documents.preload(:blob, { preview_images_attachments: :blob }).as_json(
+    documents = template.schema_documents.preload(:blob, { preview_images_attachments: :blob })
+
+    documents.each { |document| backfill_page_sizes(document) }
+
+    data['documents'] = documents.as_json(
       only: %i[id uuid],
       methods: %i[metadata signed_key],
       include: { preview_images: { only: %i[id], methods: %i[url metadata filename] } }
     )
 
     data
+  end
+
+  # Documents uploaded before page sizes were recorded get them on first open in
+  # the builder, so seals can be placed at their true printed size.
+  def backfill_page_sizes(document)
+    return if document.blob.content_type != Templates::ProcessDocument::PDF_CONTENT_TYPE
+    return if document.metadata.dig('pdf', 'page_sizes').present?
+
+    Pdfium::Document.open_bytes(document.download) do |doc|
+      document.metadata['pdf'] ||= {}
+      document.metadata['pdf']['page_sizes'] = Templates::ProcessDocument.page_sizes(doc)
+    end
+
+    ApplicationRecord.no_touching { document.save! }
+  rescue StandardError => e
+    Rails.logger.warn("Unable to read page sizes for document #{document.id}: #{e.message}")
   end
 end

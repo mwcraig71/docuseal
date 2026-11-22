@@ -42,9 +42,22 @@ module Templates
 
       attachment.metadata['pdf'] ||= {}
       attachment.metadata['pdf']['number_of_pages'] = doc.page_count
+      attachment.metadata['pdf']['page_sizes'] = page_sizes(doc)
       attachment.metadata['pdf']['fields'] = fields if fields
 
       attachment
+    end
+
+    # Page sizes in PDF points (1/72 in), so the builder can place fields such as
+    # professional seals at their true printed size.
+    def page_sizes(doc)
+      Array.new(doc.page_count) do |index|
+        width, height = doc.page_size(index)
+
+        [width.to_f.round(2), height.to_f.round(2)] if width && height
+      end
+    rescue Pdfium::PdfiumError
+      nil
     end
 
     def generate_preview_image(attachment, data)
@@ -75,6 +88,7 @@ module Templates
 
       attachment.metadata['pdf'] ||= {}
       attachment.metadata['pdf']['number_of_pages'] = number_of_pages
+      attachment.metadata['pdf']['page_sizes'] = page_sizes(doc)
 
       ApplicationRecord.no_touching do
         attachment.save!

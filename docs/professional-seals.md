@@ -26,6 +26,16 @@ Without them the generator is hidden and people upload a seal image instead. Onl
 
 In the template builder, add a **Seal** field (rosette icon) where the seal goes, and place **Signature** and **Date** fields as your board requires (each state's signing rule is shown in the generator).
 
+### True printed size
+
+A Seal field drops in at the seal's real diameter, measured against the PDF page's physical size, and is locked so it can't be stretched by dragging. The seal still moves freely.
+
+- **Seal size** (field settings): pick the state (each Seal Foundry state carries its board's diameter) or a common size, or type a diameter in inches. The default is 1.75 in, and a new Seal field reuses the size of the seal already on the template.
+- **Lock seal size**: on by default. Turn it off only if you need to size a seal by hand.
+- A **Signature** field placed on a template that has a seal comes in at 1.4 times the seal's diameter wide and half its diameter tall (2.45 x 0.875 in for a 1.75 in seal), so it can be dragged across the seal and signed over it.
+
+Page sizes are read from the PDF when it is uploaded. Documents uploaded earlier get their page sizes the first time the template is opened in the builder. Image uploads use the A4-fitted page they are printed on.
+
 When signing, the seal step offers **My Seal** (the saved seal, when you are signed in as the signer), **Generate**, and **Upload**. The seal is embedded in the completed PDF like any other image field.
 
 ## Endpoints
