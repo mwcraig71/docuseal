@@ -44,6 +44,23 @@ module SealFoundry
     end
   end
 
+  def find_state(code)
+    code = code.to_s.upcase
+
+    states.find { |state| state['code'] == code } if code.present?
+  end
+
+  # A board's seal diameter in inches. Seal Foundry reports either a number or
+  # a range ({ min:, max:, default: }).
+  def diameter_in(state)
+    value = state.is_a?(Hash) ? state['diameterIn'] : find_state(state)&.dig('diameterIn')
+    value = value['default'] || value['max'] || value['min'] if value.is_a?(Hash)
+
+    Float(value, exception: false)&.then { |v| v.positive? ? v : nil }
+  rescue Error, Faraday::Error
+    nil
+  end
+
   # Returns the seal image as a String (SVG markup or PNG bytes).
   def render(state:, fields:, color: nil, format: 'svg', diameter_in: nil)
     raise NotConfigured, 'Seal Foundry is not configured' unless configured?

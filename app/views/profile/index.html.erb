@@ -57,18 +57,29 @@
       <%= t('update_initials') %>
     </a>
     <p class="text-2xl font-bold mt-8 mb-2">
-      <%= t('professional_seal') %>
+      <%= t('professional_seals') %>
     </p>
     <p class="text-sm mb-4"><%= t('seal_description') %></p>
-    <% seal = UserConfigs.load_seal(current_user) %>
-    <% if seal %>
-      <div class="flex justify-center mb-4 relative">
-        <%= button_to button_title(title: t('remove'), disabled_with: t('removing')), user_seal_path, method: :delete, class: 'right-0 top-0 absolute link' %>
-        <img src="<%= seal.url(time: ActiveStorage::Attachment.service_url_time) %>" style="height: 160px; width: 100%; object-fit: contain;">
+    <% seals = UserSeals.with_attachments(current_user) %>
+    <% if seals.present? %>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+        <% seals.each do |entry, attachment| %>
+          <div class="relative border border-base-300 rounded-xl p-2 text-center">
+            <%= button_to button_title(title: t('remove'), disabled_with: t('removing')), user_seal_path, params: { id: entry['id'] }, method: :delete, class: 'right-2 top-1 absolute link text-xs' %>
+            <img src="<%= attachment.url(time: ActiveStorage::Attachment.service_url_time) %>" alt="<%= UserSeals.label(entry) %>" style="height: 120px; width: 100%; object-fit: contain;" class="mt-4">
+            <div class="text-sm font-medium mt-1"><%= UserSeals.label(entry) %></div>
+            <% if entry['fields'].present? && entry.dig('fields', 'NAME').present? %>
+              <div class="text-xs opacity-70 truncate"><%= entry.dig('fields', 'NAME') %></div>
+            <% end %>
+            <% if entry['diameter_in'] %>
+              <div class="text-xs opacity-70"><%= t('printed_at_diameter', diameter: entry['diameter_in'].to_f.round(3)) %></div>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     <% end %>
-    <a href="<%= edit_user_seal_path %>" data-turbo-frame="modal" data-native-modal="medium" aria-label="<%= t('update_seal') %>" class="base-button w-full">
-      <%= t('update_seal') %>
+    <a href="<%= edit_user_seal_path %>" data-turbo-frame="modal" data-native-modal="medium" aria-label="<%= t('manage_seals') %>" class="base-button w-full">
+      <%= t('manage_seals') %>
     </a>
     <% if true_user == current_user && !current_account.testing? %>
       <p class="text-2xl font-bold mt-8 mb-4">

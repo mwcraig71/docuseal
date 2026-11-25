@@ -538,7 +538,7 @@
             :field="currentField"
             :dry-run="dryRun"
             :submitter="submitter"
-            :prefill-data="prefillSeal"
+            :prefill-seals="prefillSeals"
             :seal-settings="sealSettings"
             :attachments-index="attachmentsIndex"
             :show-field-names="showFieldNames"
@@ -1008,13 +1008,13 @@ export default {
       required: false,
       default: null
     },
-    prefillSeal: {
-      type: Object,
+    prefillSeals: {
+      type: Array,
       required: false,
-      default: null
+      default: () => []
     },
     sealSettings: {
-      type: Object,
+      type: [Array, Object],
       required: false,
       default: null
     },

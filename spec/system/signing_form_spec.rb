@@ -854,6 +854,41 @@ RSpec.describe 'Signing Form' do
         .with(hash_including(state: 'SC', format: 'png', fields: hash_including('LEGEND' => 'LICENSED')))
     end
 
+    it 'lets a signer with several saved seals pick the state seal' do
+      seals = { 'SC' => 1.75, 'NC' => 1.625 }.map do |state, diameter_in|
+        blob = ActiveStorage::Blob.create_and_upload!(
+          io: Rails.root.join('spec/fixtures/sample-image.png').open,
+          filename: "#{state}-seal.png", content_type: 'image/png',
+          metadata: UserSeals.blob_metadata(state:, diameter_in:)
+        )
+        attachment = ActiveStorage::Attachment.create!(blob:, name: 'seal', record: author)
+
+        UserSeals.build_entry(source: 'generate', attachment:, state:, state_name: state,
+                              fields: { 'NAME' => 'John Doe', 'LICENSE_NO' => "#{state}-1" }, diameter_in:)
+      end
+
+      UserSeals.save!(author, seals)
+      submitter.update!(email: author.email)
+
+      sign_in author
+      visit submit_form_path(slug: submitter.slug)
+
+      find('#expand_form_button').click
+
+      expect(page).to have_button('My Seals')
+
+      find('.saved-seals-list button', text: 'NC #NC-1').click
+      find('#submit_form_button').click
+
+      expect(page).to have_content('Form has been completed!')
+
+      submitter.reload
+
+      attachment = submitter.attachments.find { |a| a.uuid == field_value(submitter, 'Engineer Seal') }
+
+      expect(attachment.metadata).to include('seal_state' => 'NC', 'seal_diameter_in' => 1.625)
+    end
+
     it 'completes the form with an uploaded seal image' do
       visit submit_form_path(slug: submitter.slug)
 

@@ -31,4 +31,11 @@ RSpec.describe SealFoundry do
     expect { described_class.render(state: 'TX', fields: {}) }
       .to raise_error(SealFoundry::ValidationError, 'License number is required')
   end
+
+  it 'reads a board diameter given as a number or a range' do
+    expect(described_class.diameter_in({ 'diameterIn' => 1.75 })).to eq(1.75)
+    expect(described_class.diameter_in({ 'diameterIn' => { 'min' => 1.5, 'max' => 2,
+                                                           'default' => 1.625 } })).to eq(1.625)
+    expect(described_class.diameter_in({ 'diameterIn' => nil })).to be_nil
+  end
 end

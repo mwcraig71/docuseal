@@ -34,7 +34,7 @@ safeRegisterElement('submission-form', class extends HTMLElement {
       canSendEmail: this.dataset.canSendEmail === 'true',
       prefillSignature: this.dataset.prefillSignature ? JSON.parse(this.dataset.prefillSignature) : null,
       prefillInitials: this.dataset.prefillInitials ? JSON.parse(this.dataset.prefillInitials) : null,
-      prefillSeal: this.dataset.prefillSeal ? JSON.parse(this.dataset.prefillSeal) : null,
+      prefillSeals: this.dataset.prefillSeals ? JSON.parse(this.dataset.prefillSeals) : [],
       sealSettings: this.dataset.sealSettings ? JSON.parse(this.dataset.sealSettings) : null,
       currentUser: this.dataset.currentUser ? JSON.parse(this.dataset.currentUser) : null,
       goToLast: this.dataset.goToLast === 'true',

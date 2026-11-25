@@ -1,4 +1,4 @@
-<%= render 'shared/turbo_modal', title: t('update_seal') do %>
+<%= render 'shared/turbo_modal', title: t('manage_seals') do %>
   <% options = [[t('generate'), 'generate'], [t('upload'), 'upload']] %>
   <toggle-visible data-element-ids="<%= options.map(&:last).to_json %>" class="relative text-center block <%= turbo_native_app? ? ('mt-1.5' if turbo_native_android?) : 'mt-4' %>">
     <div class="join">
@@ -14,7 +14,8 @@
   </toggle-visible>
   <div id="generate" class="mt-3" style="<%= 'padding-inline: 18px' if turbo_native_app? %>">
     <%= form_for @user_config, url: user_seal_path, method: :put, data: { turbo_frame: :_top }, html: { autocomplete: :off, enctype: 'multipart/form-data' } do |f| %>
-      <seal-generator-form class="block" data-settings="<%= @seal_settings.to_json %>" data-default-name="<%= current_user.full_name %>" data-states-url="<%= user_seal_foundry_index_path %>" data-preview-url="<%= preview_user_seal_foundry_index_path %>"></seal-generator-form>
+      <%= hidden_field_tag :checklist, '1' %>
+      <seal-checklist-form class="block" data-seals="<%= @seals.select { |s| s['source'] == 'generate' }.to_json %>" data-default-name="<%= current_user.full_name %>" data-states-url="<%= user_seal_foundry_index_path %>" data-preview-url="<%= preview_user_seal_foundry_index_path %>"></seal-checklist-form>
       <div class="form-control mt-4">
         <%= f.button button_title(title: t('save'), disabled_with: t('saving')), class: 'base-button' %>
       </div>
@@ -22,6 +23,17 @@
   </div>
   <div id="upload" class="hidden mt-3" style="<%= 'padding-inline: 18px' if turbo_native_app? %>">
     <%= form_for @user_config, url: user_seal_path, method: :put, data: { turbo_frame: :_top }, html: { autocomplete: :off, enctype: 'multipart/form-data' } do |f| %>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div class="form-control">
+          <%= label_tag :seal_upload_state, t('state'), class: 'label' %>
+          <%= select_tag :state, options_for_select(@states.map { |s| ["#{s['name']}#{" (#{s['diameterIn'].is_a?(Hash) ? s['diameterIn']['default'] : s['diameterIn']} in)" if s['diameterIn'].present?}", s['code']] }), include_blank: true, id: 'seal_upload_state', class: 'base-select' %>
+        </div>
+        <div class="form-control">
+          <%= label_tag :seal_upload_diameter, t('seal_diameter_in'), class: 'label' %>
+          <%= number_field_tag :diameter_in, nil, step: 0.0625, min: UserSeals::MIN_DIAMETER_IN, max: UserSeals::MAX_DIAMETER_IN, id: 'seal_upload_diameter', class: 'base-input', placeholder: t('from_state') %>
+        </div>
+        <p class="col-span-2 text-xs opacity-70"><%= t('upload_seal_size_hint') %></p>
+      </div>
       <file-dropzone data-submit-on-upload="true" class="w-full">
         <label for="seal_file" class="w-full block h-32 relative bg-base-200 hover:bg-base-200/70 rounded-md border border-base-content border-dashed">
           <div class="absolute top-0 right-0 left-0 bottom-0 flex items-center justify-center p-2">

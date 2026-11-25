@@ -28,9 +28,13 @@ class SubmitFormSealsController < ActionController::API
   def create
     png = SealFoundry.render(**seal_params, format: 'png')
 
+    metadata = UserSeals.blob_metadata(state: seal_params[:state].upcase.first(2),
+                                       diameter_in: SealFoundry.diameter_in(seal_params[:state]))
+
     blob = ActiveStorage::Blob.create_and_upload!(io: StringIO.new(png),
                                                   filename: "#{seal_params[:state]}-seal.png",
-                                                  content_type: 'image/png')
+                                                  content_type: 'image/png',
+                                                  metadata:)
 
     attachment = ActiveStorage::Attachment.create!(blob:, name: 'attachments', record: @submitter)
 

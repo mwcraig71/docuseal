@@ -114,11 +114,20 @@ class SubmitFormController < ApplicationController
 
   private
 
+  # Every seal the signer saved on their profile, so they can pick the state
+  # the document is for. Generated seals also pre-fill the generator.
   def load_prefill_seal
-    seal = UserConfigs.load_seal(current_user)
+    seals = UserSeals.with_attachments(current_user)
 
-    @prefill_seal = Submitters.build_prefill_attachment_data(@submitter, seal) if seal
-    @seal_settings = UserConfigs.load_seal_settings(current_user).presence
+    @prefill_seals = seals.map do |entry, attachment|
+      Submitters.build_prefill_attachment_data(@submitter, attachment)
+                .merge(id: entry['id'], state: entry['state'], label: UserSeals.label(entry),
+                       name: entry.dig('fields', 'NAME'), diameter_in: entry['diameter_in'])
+    end.presence
+
+    @seal_settings = seals.filter_map do |entry, _|
+      entry.slice('state', 'fields', 'color') if entry['source'] == 'generate' && entry['state'].present?
+    end.presence
   end
 
   def maybe_render_not_found_for_search_bot

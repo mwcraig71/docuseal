@@ -61,15 +61,41 @@
         class="h-52 mx-auto uploaded-image-preview"
       >
     </div>
-    <div
-      v-else-if="mode === 'saved'"
-      class="flex justify-center"
-    >
+    <div v-else-if="mode === 'saved' && selectedSeal">
+      <div
+        v-if="prefillSeals.length > 1"
+        class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-3 saved-seals-list"
+      >
+        <button
+          v-for="(seal, index) in prefillSeals"
+          :key="seal.id || seal.token"
+          type="button"
+          class="border rounded-xl p-1 text-center bg-base-100"
+          :class="index === selectedSealIndex ? 'border-base-content border-2' : 'border-base-300'"
+          :aria-pressed="index === selectedSealIndex"
+          @click.prevent="selectedSealIndex = index"
+        >
+          <img
+            :src="seal.url"
+            :alt="seal.label"
+            class="h-16 w-full object-contain"
+          >
+          <span class="block text-xs truncate mt-1">{{ seal.label }}</span>
+        </button>
+      </div>
       <img
-        :src="prefillData.url"
-        :alt="t('seal')"
+        :src="selectedSeal.url"
+        :alt="selectedSeal.label || t('seal')"
         class="h-52 mx-auto"
       >
+      <p
+        v-if="selectedSeal.label"
+        class="text-center text-sm mt-2"
+      >
+        {{ selectedSeal.label }}<template v-if="selectedSeal.diameter_in">
+          &middot; {{ selectedSeal.diameter_in }} in
+        </template>
+      </p>
     </div>
     <div
       v-else-if="mode === 'generate'"
@@ -219,13 +245,13 @@ export default {
       required: false,
       default: () => ({})
     },
-    prefillData: {
-      type: Object,
+    prefillSeals: {
+      type: Array,
       required: false,
-      default: null
+      default: () => []
     },
     sealSettings: {
-      type: Object,
+      type: [Array, Object],
       required: false,
       default: null
     },
@@ -238,13 +264,14 @@ export default {
   emits: ['attached', 'update:model-value'],
   data () {
     return {
-      mode: this.prefillData ? 'saved' : 'generate',
+      mode: this.prefillSeals.length ? 'saved' : 'generate',
+      selectedSealIndex: Math.max(this.prefillSeals.findIndex((s) => s.state && s.state === this.field.preferences?.seal_state), 0),
       sealStates: [],
       statesError: '',
       isLoadingStates: true,
       stateCode: '',
       sealValues: {},
-      color: this.sealSettings?.color || '#000000',
+      color: '#000000',
       previewUrl: '',
       previewError: ''
     }
@@ -252,6 +279,12 @@ export default {
   computed: {
     colors () {
       return SEAL_COLORS
+    },
+    savedSettings () {
+      return [this.sealSettings].flat().filter((s) => s && s.state)
+    },
+    selectedSeal () {
+      return this.prefillSeals[this.selectedSealIndex] || null
     },
     currentState () {
       return this.sealStates.find((s) => s.code === this.stateCode) || { fields: [], options: [] }
@@ -261,7 +294,7 @@ export default {
     },
     modes () {
       return [
-        this.prefillData && { value: 'saved', label: this.t('my_seal') },
+        this.prefillSeals.length && { value: 'saved', label: this.prefillSeals.length > 1 ? this.t('my_seals') : this.t('my_seal') },
         { value: 'generate', label: this.t('generate') },
         { value: 'upload', label: this.t('upload') }
       ].filter(Boolean)
@@ -283,10 +316,12 @@ export default {
       return
     }
 
-    const saved = this.sealSettings || {}
-    const state = states.find((s) => s.code === saved.state) || states.find((s) => s.code === this.field.preferences?.seal_state) || states[0]
+    const fieldState = this.field.preferences?.seal_state
+    const saved = this.savedSettings.find((s) => s.state === fieldState) || this.savedSettings[0] || {}
+    const state = states.find((s) => s.code === fieldState) || states.find((s) => s.code === saved.state) || states[0]
 
     this.stateCode = state.code
+    this.color = saved.color || this.color
     this.sealValues = defaultSealValues(state, { NAME: this.submitter?.name, ...(saved.state === state.code ? saved.fields : {}) })
 
     this.refreshPreview()
@@ -297,9 +332,10 @@ export default {
   methods: {
     selectState (code) {
       const { NAME, LICENSE_NO } = this.sealValues
+      const saved = this.savedSettings.find((s) => s.state === code)
 
       this.stateCode = code
-      this.sealValues = defaultSealValues(this.currentState, { NAME, LICENSE_NO })
+      this.sealValues = defaultSealValues(this.currentState, saved ? saved.fields : { NAME, LICENSE_NO })
 
       this.refreshPreview()
     },
@@ -339,12 +375,12 @@ export default {
     },
     submitPrefill () {
       if (this.dryRun) {
-        return Promise.resolve(this.emitAttachment({ uuid: Math.random().toString(), url: this.prefillData.url }))
+        return Promise.resolve(this.emitAttachment({ uuid: Math.random().toString(), url: this.selectedSeal.url }))
       }
 
       const formData = new FormData()
 
-      formData.append('prefill_token', this.prefillData.token)
+      formData.append('prefill_token', this.selectedSeal.token)
 
       return fetch(this.baseUrl + `/s/${this.submitterSlug}/prefill_attachments`, {
         method: 'POST',
@@ -386,7 +422,7 @@ export default {
         return Promise.resolve({})
       }
 
-      if (this.mode === 'saved' && this.prefillData) {
+      if (this.mode === 'saved' && this.selectedSeal) {
         return this.submitPrefill()
       }
 

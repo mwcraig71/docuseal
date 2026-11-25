@@ -107,10 +107,19 @@ RSpec.describe 'Profile Settings' do
     end
   end
 
-  context 'when managing the professional seal' do
+  context 'when managing professional seals' do
     let(:texas) do
       {
-        'code' => 'TX', 'name' => 'Texas', 'signing' => 'Seal plus signature and date.',
+        'code' => 'TX', 'name' => 'Texas', 'diameterIn' => 1.75, 'signing' => 'Seal plus signature and date.',
+        'fields' => [{ 'key' => 'NAME', 'label' => 'Name exactly as on board record', 'required' => true },
+                     { 'key' => 'LICENSE_NO', 'label' => 'License number', 'required' => true }],
+        'options' => []
+      }
+    end
+
+    let(:ohio) do
+      {
+        'code' => 'OH', 'name' => 'Ohio', 'diameterIn' => { 'min' => 1.5, 'max' => 2, 'default' => 2 },
         'fields' => [{ 'key' => 'NAME', 'label' => 'Name exactly as on board record', 'required' => true },
                      { 'key' => 'LICENSE_NO', 'label' => 'License number', 'required' => true }],
         'options' => []
@@ -118,7 +127,7 @@ RSpec.describe 'Profile Settings' do
     end
 
     before do
-      allow(SealFoundry).to receive_messages(configured?: true, states: [texas])
+      allow(SealFoundry).to receive_messages(configured?: true, states: [texas, ohio])
       allow(SealFoundry).to receive(:render) do |**kwargs|
         if kwargs[:format] == 'png'
           Rails.root.join('spec/fixtures/sample-image.png').binread
@@ -128,39 +137,90 @@ RSpec.describe 'Profile Settings' do
       end
     end
 
-    it 'generates and saves a seal through Seal Foundry' do
-      click_link 'Update Seal'
+    it 'generates a seal for each checked state with its own license number and name' do
+      click_link 'Manage Seals'
 
       within('#generate') do
-        select 'Texas', from: 'State'
-        fill_in 'Name exactly as on board record', with: 'John Doe'
-        fill_in 'License number', with: '123456'
+        check 'Texas'
 
-        expect(page).to have_css('img[data-preview][src^="blob:"]')
+        within('[data-details="TX"]') do
+          fill_in 'License number', with: '123456'
+
+          expect(page).to have_css('img[data-preview][src^="blob:"]')
+        end
+
+        check 'Ohio'
+
+        within('[data-details="OH"]') do
+          fill_in 'Name exactly as on board record', with: 'John Q. Doe'
+          fill_in 'License number', with: 'PE.98765'
+        end
 
         click_button 'Save'
       end
 
       expect(page).to have_content('Seal has been saved.')
-      expect(UserConfigs.load_seal(user)).to be_present
-      expect(UserConfigs.load_seal_settings(user)).to include('state' => 'TX',
-                                                              'fields' => include('LICENSE_NO' => '123456'))
-      expect(SealFoundry).to have_received(:render).with(hash_including(state: 'TX', format: 'png'))
+
+      seals = UserSeals.list(user).index_by { |entry| entry['state'] }
+
+      expect(seals.keys).to contain_exactly('TX', 'OH')
+      expect(seals['TX']).to include('source' => 'generate', 'diameter_in' => 1.75,
+                                     'fields' => include('NAME' => user.full_name, 'LICENSE_NO' => '123456'))
+      expect(seals['OH']).to include('diameter_in' => 2.0,
+                                     'fields' => include('NAME' => 'John Q. Doe', 'LICENSE_NO' => 'PE.98765'))
+      expect(UserSeals.with_attachments(user).map do |_, a|
+        a.metadata['seal_diameter_in']
+      end).to contain_exactly(1.75, 2.0)
+      expect(SealFoundry).to have_received(:render).with(hash_including(state: 'OH', format: 'png')).once
+      expect(page).to have_content('Texas #123456')
+      expect(page).to have_content('Ohio #PE.98765')
     end
 
-    it 'removes the saved seal' do
-      click_link 'Update Seal'
+    it 'keeps unchanged seals and removes unchecked states' do
+      click_link 'Manage Seals'
 
-      within('#upload') do
-        find('input[type="file"]', visible: false).attach_file(Rails.root.join('spec/fixtures/sample-image.png'))
+      within('#generate') do
+        check 'Texas'
+        within('[data-details="TX"]') { fill_in 'License number', with: '123456' }
+        check 'Ohio'
+        within('[data-details="OH"]') { fill_in 'License number', with: '555' }
+        click_button 'Save'
       end
 
       expect(page).to have_content('Seal has been saved.')
 
+      texas_uuid = UserSeals.list(user).find { |entry| entry['state'] == 'TX' }['attachment_uuid']
+
+      click_link 'Manage Seals'
+
+      within('#generate') do
+        uncheck 'Ohio'
+        click_button 'Save'
+      end
+
+      expect(page).to have_content('Seal has been saved.')
+
+      seals = UserSeals.list(user)
+
+      expect(seals.pluck('state')).to eq(['TX'])
+      expect(seals.first['attachment_uuid']).to eq(texas_uuid)
+    end
+
+    it 'uploads a seal for a state and removes it' do
+      click_link 'Manage Seals'
+
+      within('#upload') do
+        select 'Texas', from: 'State'
+        find('input[type="file"]', visible: false).attach_file(Rails.root.join('spec/fixtures/sample-image.png'))
+      end
+
+      expect(page).to have_content('Seal has been saved.')
+      expect(UserSeals.list(user).first).to include('source' => 'upload', 'state' => 'TX', 'diameter_in' => 1.75)
+
       click_button 'Remove', match: :first
 
       expect(page).to have_content('Seal has been removed.')
-      expect(UserConfigs.load_seal(user)).to be_nil
+      expect(UserSeals.list(user)).to be_empty
     end
   end
 end

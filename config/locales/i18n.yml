@@ -391,7 +391,14 @@ en: &en
   seal_has_been_saved: Seal has been saved.
   seal_has_been_removed: Seal has been removed.
   seal_generator_is_unavailable: Seal generator is unavailable. Upload an image of your seal instead.
-  seal_description: Store your engineering or professional seal to apply it to documents next to your signature. Upload a scan of your physical stamp or generate a digital seal from your state's template.
+  seal_description: Store a seal for each state you're licensed in. Check the states, enter the license number for each, and adjust the name if it reads differently on that state's seal. Each seal prints at its board's required size.
+  professional_seals: Professional Seals
+  manage_seals: Manage Seals
+  state: State
+  seal_diameter_in: Diameter (in)
+  from_state: From state
+  upload_seal_size_hint: Pick the state so the seal prints at that board's size, or enter the diameter. Crop the scan tightly to the seal's outer edge.
+  printed_at_diameter: "Prints at %{diameter} in"
   change_password: Change Password
   two_factor_authentication: Two-Factor Authentication
   2fa_is_not_configured: 2FA is not configured
