@@ -44,6 +44,21 @@ export function missingRequired (state, values) {
   return (state?.fields || []).filter((f) => f.required && !String(values[f.key] || '').trim())
 }
 
+// Seal Foundry reports a board's diameter as a number or { min, max, default }.
+export function sealDiameterIn (value) {
+  if (value && typeof value === 'object') {
+    return parseFloat(value.default ?? value.max ?? value.min)
+  }
+
+  return parseFloat(value)
+}
+
+export function sealDiameterLabel (value) {
+  const diameter = sealDiameterIn(value)
+
+  return Number.isFinite(diameter) && diameter > 0 ? `${parseFloat(diameter.toFixed(3))} in` : ''
+}
+
 export const SEAL_COLORS = [['#000000', 'Black'], ['#1e3a8a', 'Blue'], ['#991b1b', 'Red']]
 
 export function debounce (fn, wait = 350) {

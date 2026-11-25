@@ -118,6 +118,7 @@ const en = {
   enter_screen_reader_mode: 'Enter screen reader mode',
   seal: 'Seal',
   my_seal: 'My Seal',
+  my_seals: 'My Seals',
   generate: 'Generate',
   change: 'Change',
   state: 'State',

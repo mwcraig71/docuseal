@@ -212,6 +212,19 @@ module Submissions
                                                                       file_links_expire_at:)
     end
 
+    # A seal prints at its board's true diameter (stored on the image when the
+    # seal is generated or uploaded for a state), centered on the field, unless
+    # the template author unlocked the seal size.
+    def seal_box_size(field, attachment)
+      return if field['type'] != 'seal' || field.dig('preferences', 'unlock_size')
+
+      diameter_in = UserSeals.normalize_diameter(attachment.metadata['seal_diameter_in'])
+
+      return unless diameter_in
+
+      [diameter_in * 72.0, diameter_in * 72.0]
+    end
+
     def fill_submitter_fields(submitter, account, pdfs_index, with_signature_id:, is_flatten:, with_headings: nil,
                               with_submitter_timezone: false, with_signature_id_reason: true,
                               with_timestamp_seconds: false, with_signature_id_completed_at: false,
@@ -487,8 +500,9 @@ module Submissions
                 raise
               end
 
-            scale = [(area['w'] * width) / image.width,
-                     (area['h'] * height) / image.height].min
+            box_w, box_h = seal_box_size(field, attachment) || [area['w'] * width, area['h'] * height]
+
+            scale = [box_w / image.width, box_h / image.height].min
 
             resized_image = image.resize([scale * 4, 1].select(&:positive?).min)
 
