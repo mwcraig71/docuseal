@@ -211,7 +211,14 @@
       @click="inputMode && maybeToggleCheckboxValue()"
     />
     <span
-      v-if="field?.type && editable"
+      v-if="isSealSizeLocked && (isSelected || isDraw)"
+      class="absolute left-1/2 -translate-x-1/2 -bottom-5 whitespace-nowrap rounded bg-base-100 border border-base-300 px-1 text-[10px] leading-4 text-base-content/80 pointer-events-none z-10"
+      :title="t('seal_size_locked')"
+    >
+      &#8960; {{ sealDiameterLabel }} &middot; {{ t('locked') }}
+    </span>
+    <span
+      v-if="field?.type && editable && !isSealSizeLocked"
       class="h-4 w-4 lg:h-2.5 lg:w-2.5 -right-1 rounded-full -bottom-1 border-gray-400 bg-white shadow-md border absolute cursor-nwse-resize"
       :class="{ 'z-30': isInMultiSelection }"
       @mousedown.stop="startResize"
@@ -225,6 +232,7 @@ import FieldType from './field_type'
 import Field from './field'
 import AreaTitle from './area_title'
 import { IconCheck } from '@tabler/icons-vue'
+import { isSealSizeLocked, sealDiameterIn, formatInches } from './seal_size'
 
 export default {
   name: 'FieldArea',
@@ -504,6 +512,12 @@ export default {
     },
     isSelected () {
       return this.selectedAreasRef.value.includes(this.area)
+    },
+    isSealSizeLocked () {
+      return isSealSizeLocked(this.field)
+    },
+    sealDiameterLabel () {
+      return formatInches(sealDiameterIn(this.field))
     },
     isInMultiSelection () {
       return this.selectedAreasRef.value.length >= 2 && this.isSelected
@@ -867,6 +881,8 @@ export default {
       }
     },
     startResize () {
+      if (this.isSealSizeLocked) return
+
       if (!this.selectedAreasRef.value.includes(this.area)) {
         this.selectedAreasRef.value = [this.area]
       }
@@ -887,6 +903,8 @@ export default {
       this.save()
     },
     startTouchResize (e) {
+      if (this.isSealSizeLocked) return
+
       if (!this.selectedAreasRef.value.includes(this.area)) {
         this.selectedAreasRef.value = [this.area]
       }

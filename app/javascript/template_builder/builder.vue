@@ -964,6 +964,7 @@ import { IconPlus, IconFiles, IconUsersPlus, IconDeviceFloppy, IconChevronDown, 
 import { v4 } from 'uuid'
 import { ref, computed, toRaw, defineAsyncComponent } from 'vue'
 import * as i18n from './i18n'
+import { applySealSize, isSealSizeLocked, physicalAreaSize, sealDiameterIn, signatureAreaSizeForSeal } from './seal_size'
 
 const isEmpty = (obj) => {
   if (obj == null) return true
@@ -2210,6 +2211,14 @@ export default {
       return -1
     },
     insertField (field) {
+      if (field.type === 'seal' && !field.preferences?.seal_diameter_in) {
+        const existingSeal = this.sealFieldFor(field.submitter_uuid)
+
+        if (existingSeal?.preferences?.seal_diameter_in) {
+          field.preferences = { ...field.preferences, seal_diameter_in: existingSeal.preferences.seal_diameter_in }
+        }
+      }
+
       const insertIndex = this.findFieldInsertIndex(field)
 
       if (insertIndex !== -1) {
@@ -2770,6 +2779,11 @@ export default {
       }
 
       const area = this.lastSelectedArea
+
+      if (event.altKey && isSealSizeLocked(this.fieldForArea(area))) {
+        return
+      }
+
       const documentRef = this.documentRefs.find((e) => e.document.uuid === area.attachment_uuid)
       const page = documentRef.pageRefs[area.page].$refs.image
       const rect = page.getBoundingClientRect()
@@ -3116,6 +3130,58 @@ export default {
         this.syncUndoTemplate()
       })
     },
+    documentForArea (area) {
+      return this.template.documents.find((doc) => doc.uuid === area?.attachment_uuid)
+    },
+    fieldForArea (area) {
+      return this.template.fields.find((field) => field.areas?.includes(area))
+    },
+    sealFieldFor (submitterUuid) {
+      const sealFields = this.template.fields.filter((field) => field.type === 'seal')
+
+      return sealFields.find((field) => field.submitter_uuid === submitterUuid) || sealFields[0]
+    },
+    // Seals print at the diameter set on the field; their areas are kept at
+    // that physical size on every save unless the size is unlocked.
+    enforceSealSizes () {
+      this.template.fields.forEach((field) => {
+        if (!isSealSizeLocked(field)) return
+
+        ;(field.areas || []).forEach((area) => {
+          const document = this.documentForArea(area)
+
+          if (document) applySealSize(area, field, document)
+        })
+      })
+    },
+    // New seal and signature areas start at a physical size: the seal at its
+    // diameter, the signature proportional to the seal so it can be signed
+    // across it.
+    presetPhysicalAreaSize (type, area, submitterUuid) {
+      const document = this.documentForArea(area)
+
+      if (!document) return false
+
+      if (type === 'seal') {
+        const diameter = sealDiameterIn(this.sealFieldFor(submitterUuid))
+
+        Object.assign(area, physicalAreaSize(document, area.page, diameter, diameter))
+
+        return true
+      }
+
+      if (type === 'signature') {
+        const sealField = this.sealFieldFor(submitterUuid)
+
+        if (!sealField) return false
+
+        Object.assign(area, signatureAreaSizeForSeal(sealField, document, area.page))
+
+        return true
+      }
+
+      return false
+    },
     setDefaultAreaSize (area, type) {
       const documentRef = this.documentRefs.find((e) => e.document.uuid === area.attachment_uuid)
       const pageMask = documentRef.pageRefs[area.page].$refs.mask
@@ -3167,6 +3233,10 @@ export default {
             area.h = previousArea.h
           } else {
             this.setDefaultAreaSize(area, this.drawOption ? 'checkbox' : this.drawField?.type)
+          }
+
+          if (!this.drawOption) {
+            this.presetPhysicalAreaSize(this.drawField.type, area, this.drawField.submitter_uuid)
           }
 
           area.x -= area.w / 2
@@ -3231,6 +3301,8 @@ export default {
           } else {
             this.setDefaultAreaSize(area, this.drawFieldType)
           }
+
+          this.presetPhysicalAreaSize(this.drawFieldType, area, this.selectedSubmitter.uuid)
 
           area.x -= area.w / 2
           area.y -= area.h / 2
@@ -3539,6 +3611,10 @@ export default {
 
       if (field.height) {
         fieldArea.h = field.height / area.maskH
+      }
+
+      if (!field.areas?.length && !field.width && !field.height) {
+        this.presetPhysicalAreaSize(fieldType, fieldArea, field.submitter_uuid)
       }
 
       fieldArea.y = fieldArea.y - fieldArea.h / 2
@@ -4062,6 +4138,8 @@ export default {
       })
     },
     save ({ force = false } = {}) {
+      this.enforceSealSizes()
+
       this.pendingFieldAttachmentUuids = []
 
       if (this.beforeRevisionSnapshot) {

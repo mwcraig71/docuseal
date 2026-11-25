@@ -354,6 +354,72 @@
       <span class="label-text">{{ t('signature_id') }}</span>
     </label>
   </li>
+  <div
+    v-if="field.type === 'seal'"
+    class="field-settings-seal-size py-1.5 px-1 relative"
+    @click.stop
+  >
+    <select
+      class="select select-bordered select-xs font-normal w-full max-w-xs !h-7 !outline-0 bg-transparent"
+      :disabled="!editable"
+      @change="onSealSizePresetChange($event.target.value)"
+    >
+      <option
+        v-for="option in sealSizeOptions"
+        :key="option.value"
+        :value="option.value"
+        :selected="option.value === selectedSealSizeOption"
+      >
+        {{ option.label }}
+      </option>
+    </select>
+    <label
+      :style="{ backgroundColor }"
+      class="absolute -top-1 left-2.5 px-1 h-4"
+      style="font-size: 8px"
+    >
+      {{ t('seal_size') }}
+    </label>
+  </div>
+  <div
+    v-if="field.type === 'seal'"
+    class="field-settings-seal-diameter py-1.5 px-1 relative"
+    @click.stop
+  >
+    <input
+      :value="sealDiameter"
+      type="number"
+      step="0.125"
+      :min="minSealDiameter"
+      :max="maxSealDiameter"
+      :disabled="!editable"
+      class="input input-bordered input-xs w-full max-w-xs h-7 !outline-0 bg-transparent"
+      @change="setSealDiameter($event.target.value)"
+    >
+    <label
+      :style="{ backgroundColor }"
+      class="absolute -top-1 left-2.5 px-1 h-4"
+      style="font-size: 8px"
+    >
+      {{ t('seal_diameter_in') }}
+    </label>
+  </div>
+  <li
+    v-if="field.type === 'seal'"
+    class="field-settings-seal-lock"
+    @click.stop
+  >
+    <label class="cursor-pointer py-1.5">
+      <input
+        :checked="!field.preferences?.unlock_size"
+        type="checkbox"
+        :disabled="!editable"
+        class="toggle toggle-xs"
+        @change="setSealSizeLocked($event.target.checked)"
+      >
+      <span class="label-text">{{ t('lock_seal_size') }}</span>
+    </label>
+  </li>
   <li
     v-if="withRequired && field.type !== 'phone' && field.type !== 'stamp' && field.type !== 'verification' && field.type !== 'strikethrough' && field.type !== 'heading'"
     class="field-settings-required"
@@ -596,6 +662,7 @@
 
 <script>
 import { IconRouteAltLeft, IconTypography, IconShape, IconX, IconMathFunction, IconNewSection, IconInfoCircle, IconCopy, IconForms } from '@tabler/icons-vue'
+import { COMMON_SEAL_DIAMETERS_IN, MAX_SEAL_DIAMETER_IN, MIN_SEAL_DIAMETER_IN, formatInches, loadSealStates, sealDiameterIn } from './seal_size'
 
 export default {
   name: 'FieldSettings',
@@ -670,10 +737,51 @@ export default {
   emits: ['set-draw', 'scroll-to', 'click-formula', 'click-description', 'click-condition', 'click-font', 'remove-area', 'save', 'add-custom-field'],
   data () {
     return {
-      selectedValidation: ''
+      selectedValidation: '',
+      sealStates: []
     }
   },
   computed: {
+    sealDiameter () {
+      return sealDiameterIn(this.field)
+    },
+    minSealDiameter () {
+      return MIN_SEAL_DIAMETER_IN
+    },
+    maxSealDiameter () {
+      return MAX_SEAL_DIAMETER_IN
+    },
+    sealSizeOptions () {
+      const states = this.sealStates.map((state) => ({
+        value: `state:${state.code}`,
+        label: `${state.name} (${formatInches(state.diameterIn)})`,
+        diameterIn: state.diameterIn
+      }))
+
+      const common = COMMON_SEAL_DIAMETERS_IN.map((diameter) => ({
+        value: `in:${diameter}`,
+        label: formatInches(diameter),
+        diameterIn: diameter
+      }))
+
+      const options = [...states, ...common]
+
+      if (!options.find((option) => option.value === this.selectedSealSizeOption)) {
+        options.push({ value: this.selectedSealSizeOption, label: formatInches(this.sealDiameter), diameterIn: this.sealDiameter })
+      }
+
+      return options
+    },
+    selectedSealSizeOption () {
+      const stateCode = this.field.preferences?.seal_state
+      const state = stateCode && this.sealStates.find((s) => s.code === stateCode)
+
+      if (state && state.diameterIn === this.sealDiameter) {
+        return `state:${state.code}`
+      }
+
+      return `in:${this.sealDiameter}`
+    },
     schemaAttachmentsIndexes () {
       return (this.template.schema || []).reduce((acc, item, index) => {
         acc[item.attachment_uuid] = index
@@ -765,7 +873,48 @@ export default {
       })
     }
   },
+  mounted () {
+    if (this.field.type === 'seal') {
+      loadSealStates().then((states) => { this.sealStates = states })
+    }
+  },
   methods: {
+    onSealSizePresetChange (value) {
+      const option = this.sealSizeOptions.find((o) => o.value === value)
+
+      if (!option) return
+
+      this.field.preferences ||= {}
+
+      if (value.startsWith('state:')) {
+        this.field.preferences.seal_state = value.slice(6)
+      } else {
+        delete this.field.preferences.seal_state
+      }
+
+      this.setSealDiameter(option.diameterIn)
+    },
+    setSealSizeLocked (locked) {
+      this.field.preferences ||= {}
+
+      if (locked) {
+        delete this.field.preferences.unlock_size
+      } else {
+        this.field.preferences.unlock_size = true
+      }
+
+      this.$emit('save')
+    },
+    setSealDiameter (value) {
+      const diameter = parseFloat(value)
+
+      if (!Number.isFinite(diameter)) return
+
+      this.field.preferences ||= {}
+      this.field.preferences.seal_diameter_in = Math.min(Math.max(diameter, MIN_SEAL_DIAMETER_IN), MAX_SEAL_DIAMETER_IN)
+
+      this.$emit('save')
+    },
     onChangeValidation (event) {
       if (event.target.value === 'custom') {
         this.selectedValidation = 'custom'
