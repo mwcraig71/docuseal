@@ -289,7 +289,7 @@ en: &en
   save: Save
   saving: Saving
   changes_have_been_saved: Changes have been saved.
-  unlock_with_docuseal_pro: Unlock with DocuSeal Pro
+  unlock_with_docuseal_pro: Not included in STRSeal
   use_your_own_certificates_to_sign_and_verify_pdf_files: Use your own certificates to sign and verify PDF files.
   upload_certificate: Upload Certificate
   name: Name
@@ -407,7 +407,7 @@ en: &en
   password_has_been_changed: Password has been changed.
   email_integration: Email Integration
   send_via_connected_email: Send via connected email
-  activate_with_docuseal_pro: Activate with DocuSeal Pro
+  activate_with_docuseal_pro: Not included in STRSeal
   send_signature_request_to_your_recipients_directly_from_your_email: Send signature request to your recipients directly from your email
   connect_gmail: Connect Gmail
   re_connect_gmail: Re-connect Gmail
@@ -596,7 +596,7 @@ en: &en
   new_user: New User
   unarchive: Unarchive
   last_session: Last session
-  unlock_more_user_roles_with_docuseal_pro: Unlock more user roles with DocuSeal Pro.
+  unlock_more_user_roles_with_docuseal_pro: Additional user roles are not included in STRSeal.
   view_active: View Active
   team_account: Team account
   team_accounts: Team Accounts
@@ -827,7 +827,7 @@ en: &en
   use_otp_code_to_sign_in_or_click_the_link_below_html: 'Use <b>%{code}</b> code to sign in or click the link below:'
   complete_sign_in: Complete Sign In
   please_reply_to_this_email_if_you_dont_recognize_this_sign_in_attempt: Please reply to this email if you don't recognize this sign in attempt.
-  docuseal_support: DocuSeal Support
+  docuseal_support: STRSeal Support
   use_the_edit_form_to_move_it_to_another_team: Use the edit form to move it to another team.
   too_many_sms_attempts_try_again_in_a_few_seconds: Too many SMS attempts. Try again in a few seconds.
   number_phone_number_is_invalid: "+%{number} phone number is invalid"
@@ -839,7 +839,7 @@ en: &en
   click_here_to_learn_more_about_user_roles_and_permissions_html: '<a href="https://www.docuseal.com/resources/manage-users-and-roles" class="link" rel="noopener noreferrer nofollow" target="_blank">Click here</a> to learn more about user roles and permissions.'
   count_10_signature_request_emails_sent_this_month_upgrade_to_pro_to_send_unlimited_signature_request_email: '%{count} / 10 signature request emails sent this month. Upgrade to Pro to send unlimited signature request emails.'
   test_mode_emails_limit_will_be_reset_within_24_hours: Test mode emails limit will be reset within 24 hours.
-  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: On a scale of 1 to 10, how satisfied are you with the DocuSeal product?
+  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: On a scale of 1 to 10, how satisfied are you with the STRSeal product?
   tell_us_more_about_your_experience: Tell us more about your experience
   extremely_dissatisfied: Extremely Dissatisfied
   extremely_satisfied: Extremely Satisfied
@@ -847,7 +847,7 @@ en: &en
   click_here_to_update_your_payment_details_and_clear_the_invoice_to_ensure_uninterrupted_service_html: <a href="%{url}" class="link">Click here</a> to update your payment details and clear the invoice to ensure uninterrupted service.
   overdue_payment: Overdue Payment
   your_pro_plan_has_been_suspended_due_to_unpaid_invoices_you_can_update_your_payment_details_to_settle_the_invoice_and_continue_using_docuseal_or_cancel_your_subscription: Your Pro Plan has been suspended due to unpaid invoices. You can update your payment details to settle the invoice and continue using DocuSeal or cancel your subscription.
-  get_the_docuseal_app_for_a_better_mobile_experience: Get the DocuSeal app for a better mobile experience.
+  get_the_docuseal_app_for_a_better_mobile_experience: Get the STRSeal app for a better mobile experience.
   install_app: Install app
   manage_subscription: Manage Subscription
   docuseal_version_security_release_is_available: "DocuSeal v%{version} security release is available."
@@ -862,7 +862,7 @@ en: &en
   manage: Manage
   manage_plan: Manage plan
   this_submission_has_multiple_signers_which_prevents_the_use_of_a_sharing_link_html: This submission has multiple signers, which prevents the use of a sharing link as it's unclear which signer is responsible for specific fields. To resolve this, follow this <a href="https://www.docuseal.com/resources/pre-filling-recipients" class="link font-bold" rel="noopener noreferrer nofollow" target="_blank">guide</a> to define the default signer details.
-  welcome_to_docuseal: Welcome to DocuSeal
+  welcome_to_docuseal: Welcome to STRSeal
   start_a_quick_tour_to_learn_how_to_create_and_send_your_first_document: Start a quick tour to learn how to create and send your first document
   start_tour: Start Tour
   name_a_z: Name A-Z
@@ -943,8 +943,8 @@ en: &en
   reindex: Reindex
   build_search_index: Build Search Index
   require_two_factor_authentication_2fa_with_an_authenticator_app_e_g_google_authenticator_authy_all_users_signing_documents_must_pass_the_second_factor_verification_using_a_secure_code_in_addition_to_their_password: Require two-factor authentication (2FA) with an authenticator app (e.g., Google Authenticator, Authy). All users signing documents must pass the second factor verification using a secure code in addition to their password.
-  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: "Add a unique Signature ID and timestamp to each signature for audit and traceability purposes along with the timestamp. Part of DocuSeal's 21 CFR Part 11 compliance settings."
-  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: "Require signers to provide a reason for signing before completing their signature (e.g., approvals, certifications). Part of DocuSeal's 21 CFR Part 11 compliance settings."
+  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: "Add a unique Signature ID and timestamp to each signature for audit and traceability purposes along with the timestamp. Part of STRSeal's 21 CFR Part 11 compliance settings."
+  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: "Require signers to provide a reason for signing before completing their signature (e.g., approvals, certifications). Part of STRSeal's 21 CFR Part 11 compliance settings."
   allow_signers_to_create_signatures_by_typing_their_name_instead_of_drawing_or_uploading_one: Allow signers to create signatures by typing their name instead of drawing or uploading one.
   allow_signers_to_resubmit_forms_after_completion_useful_when_corrections_or_multiple_submissions_are_needed: Allow signers to resubmit forms after completion, useful when corrections or multiple submissions are needed.
   allow_recipients_to_decline_signing_a_document_the_decline_reason_notification_will_be_sent_to_the_signature_requester: Allow recipients to decline signing a document. The decline reason notification will be sent to the signature requester.
@@ -1025,7 +1025,7 @@ en: &en
   mcp_token_has_been_removed: MCP token has been removed.
   enable_mcp_server: Enable MCP server
   all_existing_mcp_connections_will_be_stopped_immediately_when_this_setting_is_disabled: All existing MCP connections will be stopped immediately when this setting is disabled.
-  connect_to_docuseal_mcp: Connect to DocuSeal MCP
+  connect_to_docuseal_mcp: Connect to STRSeal MCP
   add_the_following_to_your_mcp_client_configuration: Add the following to your MCP client configuration
   works_with_claude_desktop_cursor_windsurf_vs_code_and_any_mcp_compatible_client: Works with Claude Desktop, Cursor, Windsurf, VS Code, and any MCP-compatible client.
   your_email_address_has_been_changed: Your email address has been changed
@@ -1151,7 +1151,7 @@ en: &en
     settings: 'Settings'
     settings_account_description: 'With comprehensive account settings, you can customize the eSigning experience and invite more users.'
     support: 'Support'
-    support_description: 'You can use our self-service AI assistant or email us at support@docuseal.com if you have any questions.'
+    support_description: 'Use the Settings menu to manage your account, users and seals.'
     settings_template_description: 'Use this button to access your account settings page.'
   doorkeeper:
     scopes:
@@ -1995,7 +1995,7 @@ es: &es
   use_otp_code_to_sign_in_or_click_the_link_below_html: 'Usa el código <b>%{code}</b> para iniciar sesión o haz clic en el enlace a continuación:'
   complete_sign_in: Completar Inicio de Sesión
   please_reply_to_this_email_if_you_dont_recognize_this_sign_in_attempt: Responde a este correo electrónico si no reconoces este intento de inicio de sesión.
-  docuseal_support: Soporte DocuSeal
+  docuseal_support: Soporte STRSeal
   use_the_edit_form_to_move_it_to_another_team: Usa el formulario de edición para moverlo a otro equipo.
   too_many_sms_attempts_try_again_in_a_few_seconds: Demasiados intentos de SMS. Intenta de nuevo en unos segundos.
   number_phone_number_is_invalid: "El número de teléfono +%{number} no es válido"
@@ -2007,7 +2007,7 @@ es: &es
   click_here_to_learn_more_about_user_roles_and_permissions_html: '<a href="https://www.docuseal.com/resources/manage-users-and-roles" class="link" rel="noopener noreferrer nofollow" target="_blank">Haz clic aquí</a> para obtener más información sobre los roles y permisos de usuario.'
   count_10_signature_request_emails_sent_this_month_upgrade_to_pro_to_send_unlimited_signature_request_email: '%{count} / 10 correos electrónicos de solicitud de firma enviados este mes. Mejora a Pro para enviar solicitudes de firma ilimitadas.'
   test_mode_emails_limit_will_be_reset_within_24_hours: El límite de correos electrónicos en modo de prueba se restablecerá en 24 horas.
-  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: 'En una escala del 1 al 10, ¿qué tan satisfecho estás con el producto DocuSeal?'
+  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: 'En una escala del 1 al 10, ¿qué tan satisfecho estás con el producto STRSeal?'
   tell_us_more_about_your_experience: Cuéntanos más sobre tu experiencia
   extremely_dissatisfied: Extremadamente insatisfecho
   extremely_satisfied: Extremadamente satisfecho
@@ -2015,7 +2015,7 @@ es: &es
   click_here_to_update_your_payment_details_and_clear_the_invoice_to_ensure_uninterrupted_service_html: '<a href="%{url}" class="link">Haz clic aquí</a> para actualizar tus datos de pago y liquidar la factura para garantizar un servicio ininterrumpido.'
   overdue_payment: Pago Atrasado
   your_pro_plan_has_been_suspended_due_to_unpaid_invoices_you_can_update_your_payment_details_to_settle_the_invoice_and_continue_using_docuseal_or_cancel_your_subscription: Tu plan Pro ha sido suspendido debido a facturas impagas. Puedes actualizar tus datos de pago para liquidar la factura y seguir usando DocuSeal o cancelar tu suscripción.
-  get_the_docuseal_app_for_a_better_mobile_experience: Descarga la app de DocuSeal para una mejor experiencia móvil.
+  get_the_docuseal_app_for_a_better_mobile_experience: Descarga la app de STRSeal para una mejor experiencia móvil.
   install_app: Instalar app
   manage_subscription: Gestionar Suscripción
   docuseal_version_security_release_is_available: "La versión de seguridad DocuSeal v%{version} está disponible."
@@ -2030,7 +2030,7 @@ es: &es
   manage: Gestionar
   manage_plan: Gestionar plan
   this_submission_has_multiple_signers_which_prevents_the_use_of_a_sharing_link_html: 'Este envío tiene múltiples firmantes, lo que impide el uso de un enlace para compartir, ya que no está claro qué firmante es responsable de los campos específicos. Para resolver esto, sigue esta <a href="https://www.docuseal.com/resources/pre-filling-recipients" class="link font-bold" rel="noopener noreferrer nofollow" target="_blank">guía</a> para definir los detalles predeterminados del firmante.'
-  welcome_to_docuseal: Bienvenido a DocuSeal
+  welcome_to_docuseal: Bienvenido a STRSeal
   start_a_quick_tour_to_learn_how_to_create_and_send_your_first_document: Inicia una guía rápida para aprender a crear y enviar tu primer documento.
   start_tour: Iniciar guía
   name_a_z: Nombre A-Z
@@ -2111,8 +2111,8 @@ es: &es
   reindex: Reindexar
   build_search_index: Construir índice de búsqueda
   require_two_factor_authentication_2fa_with_an_authenticator_app_e_g_google_authenticator_authy_all_users_signing_documents_must_pass_the_second_factor_verification_using_a_secure_code_in_addition_to_their_password: Requerir autenticación de dos factores (2FA) con una aplicación de autenticación (p. ej., Google Authenticator, Authy). Todos los usuarios que firman documentos deben pasar la verificación del segundo factor usando un código seguro además de su contraseña.
-  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: Agregar un ID de firma único y una marca de tiempo a cada firma para fines de auditoría y trazabilidad junto con la marca de tiempo. Parte de la configuración de cumplimiento 21 CFR Parte 11 de DocuSeal.
-  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: Requerir que los firmantes proporcionen un motivo para firmar antes de completar su firma (p. ej., aprobaciones, certificaciones). Parte de la configuración de cumplimiento 21 CFR Parte 11 de DocuSeal.
+  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: Agregar un ID de firma único y una marca de tiempo a cada firma para fines de auditoría y trazabilidad junto con la marca de tiempo. Parte de la configuración de cumplimiento 21 CFR Parte 11 de STRSeal.
+  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: Requerir que los firmantes proporcionen un motivo para firmar antes de completar su firma (p. ej., aprobaciones, certificaciones). Parte de la configuración de cumplimiento 21 CFR Parte 11 de STRSeal.
   allow_signers_to_create_signatures_by_typing_their_name_instead_of_drawing_or_uploading_one: Permitir que los firmantes creen firmas escribiendo su nombre en lugar de dibujar o subir una.
   allow_signers_to_resubmit_forms_after_completion_useful_when_corrections_or_multiple_submissions_are_needed: Permitir que los firmantes vuelvan a enviar formularios después de completarlos, útil cuando se necesitan correcciones o múltiples envíos.
   allow_recipients_to_decline_signing_a_document_the_decline_reason_notification_will_be_sent_to_the_signature_requester: Permitir que los destinatarios rechacen firmar un documento. La notificación del motivo del rechazo se enviará al solicitante de la firma.
@@ -2193,7 +2193,7 @@ es: &es
   mcp_token_has_been_removed: El token MCP ha sido eliminado.
   enable_mcp_server: Habilitar servidor MCP
   all_existing_mcp_connections_will_be_stopped_immediately_when_this_setting_is_disabled: Todas las conexiones MCP existentes se detendrán inmediatamente cuando se desactive esta configuración.
-  connect_to_docuseal_mcp: Conectar a DocuSeal MCP
+  connect_to_docuseal_mcp: Conectar a STRSeal MCP
   add_the_following_to_your_mcp_client_configuration: Agregue lo siguiente a la configuración de su cliente MCP
   works_with_claude_desktop_cursor_windsurf_vs_code_and_any_mcp_compatible_client: Funciona con Claude Desktop, Cursor, Windsurf, VS Code y cualquier cliente compatible con MCP.
   your_email_address_has_been_changed: Tu dirección de correo electrónico ha sido cambiada
@@ -2311,7 +2311,7 @@ es: &es
     settings: 'Configuración'
     settings_account_description: 'Con una configuración completa de la cuenta, puedes personalizar la experiencia de firma y añadir más usuarios.'
     support: 'Soporte'
-    support_description: 'Puedes usar nuestro asistente de IA o escribirnos a support@docuseal.com si tienes preguntas.'
+    support_description: 'Use the Settings menu to manage your account, users and seals.'
     settings_template_description: 'Usa este botón para acceder a la configuración de tu cuenta.'
   doorkeeper:
     scopes:
@@ -3169,7 +3169,7 @@ it: &it
   use_otp_code_to_sign_in_or_click_the_link_below_html: 'Usa il codice <b>%{code}</b> per accedere o clicca sul link qui sotto:'
   complete_sign_in: "Completa l'Accesso"
   please_reply_to_this_email_if_you_dont_recognize_this_sign_in_attempt: Rispondi a questa e-mail se non riconosci questo tentativo di accesso.
-  docuseal_support: Supporto DocuSeal
+  docuseal_support: Supporto STRSeal
   use_the_edit_form_to_move_it_to_another_team: Usa il modulo di modifica per spostarlo in un altro team.
   too_many_sms_attempts_try_again_in_a_few_seconds: Troppi tentativi di SMS. Riprova tra qualche secondo.
   number_phone_number_is_invalid: "Il numero di telefono +%{number} non è valido"
@@ -3181,7 +3181,7 @@ it: &it
   click_here_to_learn_more_about_user_roles_and_permissions_html: '<a href="https://www.docuseal.com/resources/manage-users-and-roles" class="link" rel="noopener noreferrer nofollow" target="_blank">Fai clic qui</a> per saperne di più sui ruoli e le autorizzazioni degli utenti.'
   count_10_signature_request_emails_sent_this_month_upgrade_to_pro_to_send_unlimited_signature_request_email: '%{count} / 10 e-mail di richiesta di firma inviate questo mese. Passa a Pro per inviare richieste di firma illimitate.'
   test_mode_emails_limit_will_be_reset_within_24_hours: Il limite di e-mail in modalità di test verrà ripristinato entro 24 ore.
-  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: 'Su una scala da 1 a 10, quanto sei soddisfatto del prodotto DocuSeal?'
+  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: 'Su una scala da 1 a 10, quanto sei soddisfatto del prodotto STRSeal?'
   tell_us_more_about_your_experience: Raccontaci di più sulla tua esperienza
   extremely_dissatisfied: Estremamente insoddisfatto
   extremely_satisfied: Estremamente soddisfatto
@@ -3189,7 +3189,7 @@ it: &it
   click_here_to_update_your_payment_details_and_clear_the_invoice_to_ensure_uninterrupted_service_html: '<a href="%{url}" class="link">Fai clic qui</a> per aggiornare i tuoi dati di pagamento e saldare la fattura per garantire un servizio ininterrotto.'
   overdue_payment: Pagamento Scaduto
   your_pro_plan_has_been_suspended_due_to_unpaid_invoices_you_can_update_your_payment_details_to_settle_the_invoice_and_continue_using_docuseal_or_cancel_your_subscription: Il tuo piano Pro è stato sospeso a causa di fatture non pagate. Puoi aggiornare i tuoi dati di pagamento per saldare la fattura e continuare a utilizzare DocuSeal o annullare l'abbonamento.
-  get_the_docuseal_app_for_a_better_mobile_experience: Scarica l'app DocuSeal per un'esperienza mobile migliore.
+  get_the_docuseal_app_for_a_better_mobile_experience: Scarica l'app STRSeal per un'esperienza mobile migliore.
   install_app: Installa app
   manage_subscription: Gestisci Abbonamento
   docuseal_version_security_release_is_available: "È disponibile il rilascio di sicurezza DocuSeal v%{version}."
@@ -3204,7 +3204,7 @@ it: &it
   manage: Gestisci
   manage_plan: Gestisci piano
   this_submission_has_multiple_signers_which_prevents_the_use_of_a_sharing_link_html: "Questa sottomissione ha più firmatari, il che impedisce l'uso di un link di condivisione poiché non è chiaro quale firmatario sia responsabile di specifici campi. Per risolvere questo problema, segui questa <a href=\"https://www.docuseal.com/resources/pre-filling-recipients\" class=\"link font-bold\" rel=\"noopener noreferrer nofollow\" target=\"_blank\">guida</a> per definire i dettagli predefiniti del firmatario."
-  welcome_to_docuseal: Benvenuto in DocuSeal
+  welcome_to_docuseal: Benvenuto in STRSeal
   start_a_quick_tour_to_learn_how_to_create_and_send_your_first_document: Inizia un tour rapido per imparare a creare e inviare il tuo primo documento.
   start_tour: Inizia il tour
   name_a_z: Nome A-Z
@@ -3285,8 +3285,8 @@ it: &it
   reindex: Reindicizza
   build_search_index: Crea indice di ricerca
   require_two_factor_authentication_2fa_with_an_authenticator_app_e_g_google_authenticator_authy_all_users_signing_documents_must_pass_the_second_factor_verification_using_a_secure_code_in_addition_to_their_password: "Richiedere l'autenticazione a due fattori (2FA) con un'app di autenticazione (es. Google Authenticator, Authy). Tutti gli utenti che firmano documenti devono superare la verifica del secondo fattore utilizzando un codice sicuro oltre alla password."
-  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: Aggiungere un ID firma univoco e una marca temporale a ogni firma per scopi di audit e tracciabilità insieme alla marca temporale. Parte delle impostazioni di conformità 21 CFR Parte 11 di DocuSeal.
-  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: Richiedere ai firmatari di fornire una motivazione prima di completare la firma (es. approvazioni, certificazioni). Parte delle impostazioni di conformità 21 CFR Parte 11 di DocuSeal.
+  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: Aggiungere un ID firma univoco e una marca temporale a ogni firma per scopi di audit e tracciabilità insieme alla marca temporale. Parte delle impostazioni di conformità 21 CFR Parte 11 di STRSeal.
+  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: Richiedere ai firmatari di fornire una motivazione prima di completare la firma (es. approvazioni, certificazioni). Parte delle impostazioni di conformità 21 CFR Parte 11 di STRSeal.
   allow_signers_to_create_signatures_by_typing_their_name_instead_of_drawing_or_uploading_one: Consentire ai firmatari di creare firme digitando il proprio nome invece di disegnarle o caricarle.
   allow_signers_to_resubmit_forms_after_completion_useful_when_corrections_or_multiple_submissions_are_needed: Consentire ai firmatari di reinviare i moduli dopo il completamento, utile quando sono necessarie correzioni o più invii.
   allow_recipients_to_decline_signing_a_document_the_decline_reason_notification_will_be_sent_to_the_signature_requester: Consentire ai destinatari di rifiutare di firmare un documento. La notifica del motivo del rifiuto verrà inviata al richiedente della firma.
@@ -3367,7 +3367,7 @@ it: &it
   mcp_token_has_been_removed: Il token MCP è stato rimosso.
   enable_mcp_server: Abilita server MCP
   all_existing_mcp_connections_will_be_stopped_immediately_when_this_setting_is_disabled: Tutte le connessioni MCP esistenti verranno interrotte immediatamente quando questa impostazione viene disattivata.
-  connect_to_docuseal_mcp: Connetti a DocuSeal MCP
+  connect_to_docuseal_mcp: Connetti a STRSeal MCP
   add_the_following_to_your_mcp_client_configuration: Aggiungi quanto segue alla configurazione del tuo client MCP
   works_with_claude_desktop_cursor_windsurf_vs_code_and_any_mcp_compatible_client: Funziona con Claude Desktop, Cursor, Windsurf, VS Code e qualsiasi client compatibile con MCP.
   your_email_address_has_been_changed: Il tuo indirizzo email è stato modificato
@@ -3485,7 +3485,7 @@ it: &it
     settings: 'Impostazioni'
     settings_account_description: "Con impostazioni complete dell'account, puoi personalizzare l'esperienza di firma elettronica e invitare altri utenti."
     support: 'Supporto'
-    support_description: 'Puoi usare il nostro assistente AI oppure scriverci a support@docuseal.com se hai domande.'
+    support_description: 'Use the Settings menu to manage your account, users and seals.'
     settings_template_description: "Usa questo pulsante per accedere alla pagina delle impostazioni dell'account."
   doorkeeper:
     scopes:
@@ -4329,7 +4329,7 @@ fr: &fr
   use_otp_code_to_sign_in_or_click_the_link_below_html: 'Utilisez le code <b>%{code}</b> pour vous connecter ou cliquez sur le lien ci‑dessous :'
   complete_sign_in: Terminer la connexion
   please_reply_to_this_email_if_you_dont_recognize_this_sign_in_attempt: Veuillez répondre à cet e‑mail si vous ne reconnaissez pas cette tentative de connexion.
-  docuseal_support: Support DocuSeal
+  docuseal_support: Support STRSeal
   use_the_edit_form_to_move_it_to_another_team: Utilisez le formulaire d’édition pour le déplacer vers une autre équipe.
   too_many_sms_attempts_try_again_in_a_few_seconds: Trop de tentatives SMS. Réessayez dans quelques secondes.
   number_phone_number_is_invalid: Le numéro de téléphone +%{number} est invalide
@@ -4341,7 +4341,7 @@ fr: &fr
   click_here_to_learn_more_about_user_roles_and_permissions_html: <a href="https://www.docuseal.com/resources/manage-users-and-roles" class="link" rel="noopener noreferrer nofollow" target="_blank">Cliquez ici</a> pour en savoir plus sur les rôles et permissions des utilisateurs.
   count_10_signature_request_emails_sent_this_month_upgrade_to_pro_to_send_unlimited_signature_request_email: "%{count} / 10 e‑mails de demande de signature envoyés ce mois‑ci. Passez à Pro pour envoyer des e‑mails de demande de signature illimités."
   test_mode_emails_limit_will_be_reset_within_24_hours: La limite d’e‑mails en mode test sera réinitialisée sous 24 heures.
-  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: Sur une échelle de 1 à 10, quel est votre niveau de satisfaction du produit DocuSeal ?
+  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: Sur une échelle de 1 à 10, quel est votre niveau de satisfaction du produit STRSeal ?
   tell_us_more_about_your_experience: Dites‑nous en plus sur votre expérience
   extremely_dissatisfied: Extrêmement insatisfait
   extremely_satisfied: Extrêmement satisfait
@@ -4349,7 +4349,7 @@ fr: &fr
   click_here_to_update_your_payment_details_and_clear_the_invoice_to_ensure_uninterrupted_service_html: <a href="%{url}" class="link">Cliquez ici</a> pour mettre à jour vos informations de paiement et régler la facture afin de garantir la continuité du service.
   overdue_payment: Paiement en retard
   your_pro_plan_has_been_suspended_due_to_unpaid_invoices_you_can_update_your_payment_details_to_settle_the_invoice_and_continue_using_docuseal_or_cancel_your_subscription: "Votre offre Pro a été suspendue en raison de factures impayées.\nVous pouvez mettre à jour vos informations de paiement pour régler la facture et continuer à utiliser DocuSeal, ou annuler votre abonnement."
-  get_the_docuseal_app_for_a_better_mobile_experience: Téléchargez l’application DocuSeal pour une meilleure expérience mobile.
+  get_the_docuseal_app_for_a_better_mobile_experience: Téléchargez l’application STRSeal pour une meilleure expérience mobile.
   install_app: Installer l’application
   manage_subscription: Gérer l’abonnement
   docuseal_version_security_release_is_available: "La mise à jour de sécurité DocuSeal v%{version} est disponible."
@@ -4364,7 +4364,7 @@ fr: &fr
   manage: Gérer
   manage_plan: Gérer la formule
   this_submission_has_multiple_signers_which_prevents_the_use_of_a_sharing_link_html: Cette soumission comporte plusieurs signataires, ce qui empêche l’utilisation d’un lien de partage car il n’est pas clair quel signataire est responsable de quels champs. Pour résoudre cela, suivez ce <a href="https://www.docuseal.com/resources/pre-filling-recipients" class="link font-bold" rel="noopener noreferrer nofollow" target="_blank">guide</a> pour définir les détails du signataire par défaut.
-  welcome_to_docuseal: Bienvenue sur DocuSeal
+  welcome_to_docuseal: Bienvenue sur STRSeal
   start_a_quick_tour_to_learn_how_to_create_and_send_your_first_document: Lancez une visite rapide pour apprendre à créer et envoyer votre premier document
   start_tour: Démarrer la visite
   name_a_z: Nom A‑Z
@@ -4441,8 +4441,8 @@ fr: &fr
   reindex: Réindexer
   build_search_index: Construire l’index de recherche
   require_two_factor_authentication_2fa_with_an_authenticator_app_e_g_google_authenticator_authy_all_users_signing_documents_must_pass_the_second_factor_verification_using_a_secure_code_in_addition_to_their_password: Exiger l’authentification à deux facteurs (2FA) avec une application d’authentification (p. ex., Google Authenticator, Authy). Tous les utilisateurs qui signent des documents doivent passer la vérification du second facteur à l’aide d’un code sécurisé en plus de leur mot de passe.
-  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: Ajouter un identifiant de signature unique et un horodatage à chaque signature à des fins d’audit et de traçabilité, avec l’horodatage. Fait partie des paramètres de conformité 21 CFR Part 11 de DocuSeal.
-  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: Exiger que les signataires fournissent un motif de signature avant de finaliser leur signature (p. ex., approbations, certifications). Fait partie des paramètres de conformité 21 CFR Part 11 de DocuSeal.
+  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: Ajouter un identifiant de signature unique et un horodatage à chaque signature à des fins d’audit et de traçabilité, avec l’horodatage. Fait partie des paramètres de conformité 21 CFR Part 11 de STRSeal.
+  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: Exiger que les signataires fournissent un motif de signature avant de finaliser leur signature (p. ex., approbations, certifications). Fait partie des paramètres de conformité 21 CFR Part 11 de STRSeal.
   allow_signers_to_create_signatures_by_typing_their_name_instead_of_drawing_or_uploading_one: Autoriser les signataires à créer des signatures en tapant leur nom au lieu de dessiner ou téléverser une signature.
   allow_signers_to_resubmit_forms_after_completion_useful_when_corrections_or_multiple_submissions_are_needed: Autoriser les signataires à soumettre à nouveau les formulaires après finalisation, utile pour des corrections ou soumissions multiples.
   allow_recipients_to_decline_signing_a_document_the_decline_reason_notification_will_be_sent_to_the_signature_requester: Autoriser les destinataires à refuser de signer un document. Le motif du refus sera notifié au demandeur de signature.
@@ -4524,7 +4524,7 @@ fr: &fr
   mcp_token_has_been_removed: Le jeton MCP a été supprimé.
   enable_mcp_server: Activer le serveur MCP
   all_existing_mcp_connections_will_be_stopped_immediately_when_this_setting_is_disabled: Toutes les connexions MCP existantes seront arrêtées immédiatement lorsque ce paramètre est désactivé.
-  connect_to_docuseal_mcp: Se connecter à DocuSeal MCP
+  connect_to_docuseal_mcp: Se connecter à STRSeal MCP
   add_the_following_to_your_mcp_client_configuration: Ajoutez ce qui suit à la configuration de votre client MCP
   works_with_claude_desktop_cursor_windsurf_vs_code_and_any_mcp_compatible_client: Fonctionne avec Claude Desktop, Cursor, Windsurf, VS Code et tout client compatible MCP.
   your_email_address_has_been_changed: Votre adresse e-mail a été modifiée
@@ -5499,7 +5499,7 @@ pt: &pt
   use_otp_code_to_sign_in_or_click_the_link_below_html: 'Use o código <b>%{code}</b> para entrar ou clique no link abaixo:'
   complete_sign_in: Concluir Login
   please_reply_to_this_email_if_you_dont_recognize_this_sign_in_attempt: Responda a este e-mail se você não reconhecer esta tentativa de login.
-  docuseal_support: Suporte DocuSeal
+  docuseal_support: Suporte STRSeal
   use_the_edit_form_to_move_it_to_another_team: Use o formulário de edição para movê-lo para outra equipe.
   too_many_sms_attempts_try_again_in_a_few_seconds: Muitas tentativas de SMS. Tente novamente em alguns segundos.
   number_phone_number_is_invalid: "O número de telefone +%{number} é inválido"
@@ -5511,7 +5511,7 @@ pt: &pt
   click_here_to_learn_more_about_user_roles_and_permissions_html: '<a href="https://www.docuseal.com/resources/manage-users-and-roles" class="link" rel="noopener noreferrer nofollow" target="_blank">Clique aqui</a> para saber mais sobre os papéis e permissões dos usuários.'
   count_10_signature_request_emails_sent_this_month_upgrade_to_pro_to_send_unlimited_signature_request_email: '%{count} / 10 e-mails de solicitação de assinatura enviados este mês. Faça upgrade para Pro para enviar solicitações de assinatura ilimitadas.'
   test_mode_emails_limit_will_be_reset_within_24_hours: O limite de e-mails no modo de teste será redefinido em 24 horas.
-  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: 'Em uma escala de 1 a 10, quão satisfeito você está com o produto DocuSeal?'
+  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: 'Em uma escala de 1 a 10, quão satisfeito você está com o produto STRSeal?'
   tell_us_more_about_your_experience: Conte-nos mais sobre sua experiência
   extremely_dissatisfied: Extremamente insatisfeito
   extremely_satisfied: Extremamente satisfeito
@@ -5519,7 +5519,7 @@ pt: &pt
   click_here_to_update_your_payment_details_and_clear_the_invoice_to_ensure_uninterrupted_service_html: '<a href="%{url}" class="link">Clique aqui</a> para atualizar seus dados de pagamento e quitar a fatura para garantir um serviço ininterrupto.'
   overdue_payment: Pagamento Atrasado
   your_pro_plan_has_been_suspended_due_to_unpaid_invoices_you_can_update_your_payment_details_to_settle_the_invoice_and_continue_using_docuseal_or_cancel_your_subscription: Seu plano Pro foi suspenso devido a faturas não pagas. Você pode atualizar seus dados de pagamento para quitar a fatura e continuar usando o DocuSeal ou cancelar sua assinatura.
-  get_the_docuseal_app_for_a_better_mobile_experience: Baixe o app DocuSeal para uma melhor experiência no celular.
+  get_the_docuseal_app_for_a_better_mobile_experience: Baixe o app STRSeal para uma melhor experiência no celular.
   install_app: Instalar app
   manage_subscription: Gerenciar Assinatura
   docuseal_version_security_release_is_available: "A versão de segurança DocuSeal v%{version} está disponível."
@@ -5534,7 +5534,7 @@ pt: &pt
   manage: Gerenciar
   manage_plan: Gerenciar plano
   this_submission_has_multiple_signers_which_prevents_the_use_of_a_sharing_link_html: 'Este envio tem vários signatários, o que impede o uso de um link de compartilhamento, pois não está claro qual signatário é responsável por quais campos. Para resolver isso, siga este <a href="https://www.docuseal.com/resources/pre-filling-recipients" class="link font-bold" rel="noopener noreferrer nofollow" target="_blank">guia</a> para definir os detalhes padrão do signatário.'
-  welcome_to_docuseal: Bem-vindo ao DocuSeal
+  welcome_to_docuseal: Bem-vindo ao STRSeal
   start_a_quick_tour_to_learn_how_to_create_and_send_your_first_document: Comece um tour rápido para aprender a criar e enviar seu primeiro documento.
   start_tour: Iniciar tour
   name_a_z: Nome A-Z
@@ -5615,8 +5615,8 @@ pt: &pt
   reindex: Reindexar
   build_search_index: Construir índice de busca
   require_two_factor_authentication_2fa_with_an_authenticator_app_e_g_google_authenticator_authy_all_users_signing_documents_must_pass_the_second_factor_verification_using_a_secure_code_in_addition_to_their_password: "Exigir autenticação de dois fatores (2FA) com um aplicativo autenticador (ex.: Google Authenticator, Authy). Todos os usuários que assinam documentos devem passar pela verificação do segundo fator usando um código seguro além da senha."
-  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: Adicionar um ID de assinatura exclusivo e um carimbo de data/hora a cada assinatura para fins de auditoria e rastreabilidade junto com o carimbo de data/hora. Parte das configurações de conformidade 21 CFR Parte 11 do DocuSeal.
-  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: "Exigir que os signatários forneçam uma razão antes de completar a assinatura (ex.: aprovações, certificações). Parte das configurações de conformidade 21 CFR Parte 11 do DocuSeal."
+  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: Adicionar um ID de assinatura exclusivo e um carimbo de data/hora a cada assinatura para fins de auditoria e rastreabilidade junto com o carimbo de data/hora. Parte das configurações de conformidade 21 CFR Parte 11 do STRSeal.
+  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: "Exigir que os signatários forneçam uma razão antes de completar a assinatura (ex.: aprovações, certificações). Parte das configurações de conformidade 21 CFR Parte 11 do STRSeal."
   allow_signers_to_create_signatures_by_typing_their_name_instead_of_drawing_or_uploading_one: Permitir que os signatários criem assinaturas digitando seu nome em vez de desenhá-las ou carregá-las.
   allow_signers_to_resubmit_forms_after_completion_useful_when_corrections_or_multiple_submissions_are_needed: Permitir que os signatários reenviem formulários após o término, útil quando são necessárias correções ou múltiplos envios.
   allow_recipients_to_decline_signing_a_document_the_decline_reason_notification_will_be_sent_to_the_signature_requester: Permitir que os destinatários recusem assinar um documento. A notificação do motivo da recusa será enviada ao solicitante da assinatura.
@@ -5697,7 +5697,7 @@ pt: &pt
   mcp_token_has_been_removed: O token MCP foi removido.
   enable_mcp_server: Ativar servidor MCP
   all_existing_mcp_connections_will_be_stopped_immediately_when_this_setting_is_disabled: Todas as conexões MCP existentes serão interrompidas imediatamente quando esta configuração for desativada.
-  connect_to_docuseal_mcp: Conectar ao DocuSeal MCP
+  connect_to_docuseal_mcp: Conectar ao STRSeal MCP
   add_the_following_to_your_mcp_client_configuration: Adicione o seguinte à configuração do seu cliente MCP
   works_with_claude_desktop_cursor_windsurf_vs_code_and_any_mcp_compatible_client: Funciona com Claude Desktop, Cursor, Windsurf, VS Code e qualquer cliente compatível com MCP.
   your_email_address_has_been_changed: Seu endereço de e-mail foi alterado
@@ -5815,7 +5815,7 @@ pt: &pt
     settings: 'Configurações'
     settings_account_description: 'Com configurações completas de conta, você pode personalizar a experiência de assinatura eletrônica e convidar mais usuários.'
     support: 'Suporte'
-    support_description: 'Você pode usar nosso assistente de IA ou nos escrever para support@docuseal.com se tiver dúvidas.'
+    support_description: 'Use the Settings menu to manage your account, users and seals.'
     settings_template_description: 'Use este botão para acessar a página de configurações da sua conta.'
   doorkeeper:
     scopes:
@@ -6672,7 +6672,7 @@ de: &de
   use_otp_code_to_sign_in_or_click_the_link_below_html: 'Verwenden Sie den Code <b>%{code}</b>, um sich anzumelden, oder klicken Sie auf den untenstehenden Link:'
   complete_sign_in: Anmeldung abschließen
   please_reply_to_this_email_if_you_dont_recognize_this_sign_in_attempt: Bitte antworten Sie auf diese E-Mail, wenn Sie diesen Anmeldeversuch nicht erkennen.
-  docuseal_support: DocuSeal Support
+  docuseal_support: STRSeal Support
   use_the_edit_form_to_move_it_to_another_team: Verwenden Sie das Bearbeitungsformular, um es in ein anderes Team zu verschieben.
   too_many_sms_attempts_try_again_in_a_few_seconds: Zu viele SMS-Versuche. Versuchen Sie es in ein paar Sekunden erneut.
   number_phone_number_is_invalid: "Die Telefonnummer +%{number} ist ungültig"
@@ -6684,7 +6684,7 @@ de: &de
   click_here_to_learn_more_about_user_roles_and_permissions_html: '<a href="https://www.docuseal.com/resources/manage-users-and-roles" class="link" rel="noopener noreferrer nofollow" target="_blank">Klicken Sie hier</a>, um mehr über Benutzerrollen und -berechtigungen zu erfahren.'
   count_10_signature_request_emails_sent_this_month_upgrade_to_pro_to_send_unlimited_signature_request_email: '%{count} / 10 E-Mails für Signaturanfragen wurden diesen Monat gesendet. Upgraden Sie zu Pro, um unbegrenzte Signaturanfragen zu senden.'
   test_mode_emails_limit_will_be_reset_within_24_hours: Das Limit für E-Mails im Testmodus wird innerhalb von 24 Stunden zurückgesetzt.
-  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: 'Auf einer Skala von 1 bis 10: Wie zufrieden sind Sie mit dem DocuSeal-Produkt?'
+  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: 'Auf einer Skala von 1 bis 10: Wie zufrieden sind Sie mit dem STRSeal-Produkt?'
   tell_us_more_about_your_experience: Erzählen Sie uns mehr über Ihre Erfahrung
   extremely_dissatisfied: Extrem unzufrieden
   extremely_satisfied: Extrem zufrieden
@@ -6692,7 +6692,7 @@ de: &de
   click_here_to_update_your_payment_details_and_clear_the_invoice_to_ensure_uninterrupted_service_html: '<a href="%{url}" class="link">Klicken Sie hier</a>, um Ihre Zahlungsdaten zu aktualisieren und die Rechnung zu begleichen, um einen unterbrechungsfreien Service sicherzustellen.'
   overdue_payment: Überfällige Zahlung
   your_pro_plan_has_been_suspended_due_to_unpaid_invoices_you_can_update_your_payment_details_to_settle_the_invoice_and_continue_using_docuseal_or_cancel_your_subscription: Ihr Pro-Plan wurde aufgrund unbezahlter Rechnungen ausgesetzt. Sie können Ihre Zahlungsdaten aktualisieren, um die Rechnung zu begleichen und DocuSeal weiterhin zu nutzen, oder Ihr Abonnement kündigen.
-  get_the_docuseal_app_for_a_better_mobile_experience: Holen Sie sich die DocuSeal-App für ein besseres mobiles Erlebnis.
+  get_the_docuseal_app_for_a_better_mobile_experience: Holen Sie sich die STRSeal-App für ein besseres mobiles Erlebnis.
   install_app: App installieren
   manage_subscription: Abonnement verwalten
   docuseal_version_security_release_is_available: "Das Sicherheitsupdate DocuSeal v%{version} ist verfügbar."
@@ -6707,7 +6707,7 @@ de: &de
   manage: Verwalten
   manage_plan: Plan verwalten
   this_submission_has_multiple_signers_which_prevents_the_use_of_a_sharing_link_html: 'Diese Einreichung hat mehrere Unterzeichner, was die Nutzung eines Freigabelinks verhindert, da unklar ist, welcher Unterzeichner für welche Felder verantwortlich ist. Um dies zu lösen, folgen Sie dieser <a href="https://www.docuseal.com/resources/pre-filling-recipients" class="link font-bold" rel="noopener noreferrer nofollow" target="_blank">Anleitung</a>, um die Standarddetails des Unterzeichners festzulegen.'
-  welcome_to_docuseal: Willkommen bei DocuSeal
+  welcome_to_docuseal: Willkommen bei STRSeal
   start_a_quick_tour_to_learn_how_to_create_and_send_your_first_document: Starten Sie eine kurze Tour, um zu lernen, wie Sie Ihr erstes Dokument erstellen und versenden.
   start_tour: Starten
   name_a_z: Name A-Z
@@ -6788,8 +6788,8 @@ de: &de
   reindex: Neu indexieren
   build_search_index: Suchindex erstellen
   require_two_factor_authentication_2fa_with_an_authenticator_app_e_g_google_authenticator_authy_all_users_signing_documents_must_pass_the_second_factor_verification_using_a_secure_code_in_addition_to_their_password: Zwei-Faktor-Authentifizierung (2FA) mit einer Authentifizierungs-App (z. B. Google Authenticator, Authy) erforderlich. Alle Benutzer, die Dokumente unterzeichnen, müssen zusätzlich zu ihrem Passwort die zweite Faktorprüfung mit einem sicheren Code bestehen.
-  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: Fügen Sie jeder Signatur eine eindeutige Signatur-ID und einen Zeitstempel für Prüf- und Nachverfolgbarkeitszwecke hinzu. Teil der DocuSeal-Einstellungen zur 21 CFR Part 11-Compliance.
-  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: Unterzeichner müssen vor Abschluss ihrer Signatur einen Grund für die Unterzeichnung angeben (z. B. Genehmigungen, Zertifizierungen). Teil der DocuSeal-Einstellungen zur 21 CFR Part 11-Compliance.
+  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: Fügen Sie jeder Signatur eine eindeutige Signatur-ID und einen Zeitstempel für Prüf- und Nachverfolgbarkeitszwecke hinzu. Teil der STRSeal-Einstellungen zur 21 CFR Part 11-Compliance.
+  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: Unterzeichner müssen vor Abschluss ihrer Signatur einen Grund für die Unterzeichnung angeben (z. B. Genehmigungen, Zertifizierungen). Teil der STRSeal-Einstellungen zur 21 CFR Part 11-Compliance.
   allow_signers_to_create_signatures_by_typing_their_name_instead_of_drawing_or_uploading_one: Unterzeichner dürfen Signaturen erstellen, indem sie ihren Namen eingeben, statt eine Signatur zu zeichnen oder hochzuladen.
   allow_signers_to_resubmit_forms_after_completion_useful_when_corrections_or_multiple_submissions_are_needed: Unterzeichner dürfen Formulare nach Abschluss erneut einreichen – nützlich für Korrekturen oder mehrere Einreichungen.
   allow_recipients_to_decline_signing_a_document_the_decline_reason_notification_will_be_sent_to_the_signature_requester: Empfänger dürfen die Unterzeichnung eines Dokuments ablehnen. Die Benachrichtigung mit dem Ablehnungsgrund wird an den Anforderer der Signatur gesendet.
@@ -6870,7 +6870,7 @@ de: &de
   mcp_token_has_been_removed: Das MCP-Token wurde entfernt.
   enable_mcp_server: MCP-Server aktivieren
   all_existing_mcp_connections_will_be_stopped_immediately_when_this_setting_is_disabled: Alle bestehenden MCP-Verbindungen werden sofort gestoppt, wenn diese Einstellung deaktiviert wird.
-  connect_to_docuseal_mcp: Mit DocuSeal MCP verbinden
+  connect_to_docuseal_mcp: Mit STRSeal MCP verbinden
   add_the_following_to_your_mcp_client_configuration: Fügen Sie Folgendes zu Ihrer MCP-Client-Konfiguration hinzu
   works_with_claude_desktop_cursor_windsurf_vs_code_and_any_mcp_compatible_client: Funktioniert mit Claude Desktop, Cursor, Windsurf, VS Code und jedem MCP-kompatiblen Client.
   your_email_address_has_been_changed: Ihre E-Mail-Adresse wurde geändert
@@ -6988,7 +6988,7 @@ de: &de
     settings: 'Einstellungen'
     settings_account_description: 'Mit umfangreichen Kontoeinstellungen können Sie das Signiererlebnis anpassen und weitere Benutzer einladen.'
     support: 'Support'
-    support_description: 'Sie können unseren KI-Assistenten nutzen oder uns bei Fragen an support@docuseal.com schreiben.'
+    support_description: 'Use the Settings menu to manage your account, users and seals.'
     settings_template_description: 'Über diese Schaltfläche gelangen Sie zu den Kontoeinstellungen.'
   doorkeeper:
     scopes:
@@ -8373,7 +8373,7 @@ nl: &nl
   use_otp_code_to_sign_in_or_click_the_link_below_html: 'Gebruik de code <b>%{code}</b> om in te loggen of klik op de onderstaande link:'
   complete_sign_in: Inloggen voltooien
   please_reply_to_this_email_if_you_dont_recognize_this_sign_in_attempt: Reageer op deze e-mail als u deze aanmeldpoging niet herkent.
-  docuseal_support: DocuSeal Support
+  docuseal_support: STRSeal Support
   use_the_edit_form_to_move_it_to_another_team: Gebruik het bewerkingsformulier om het naar een ander team te verplaatsen.
   too_many_sms_attempts_try_again_in_a_few_seconds: Te veel SMS-pogingen. Probeer het over enkele seconden opnieuw.
   number_phone_number_is_invalid: Telefoonnummer +%{number} is ongeldig
@@ -8385,7 +8385,7 @@ nl: &nl
   click_here_to_learn_more_about_user_roles_and_permissions_html: <a href="https://www.docuseal.com/resources/manage-users-and-roles" class="link" rel="noopener noreferrer nofollow" target="_blank">Klik hier</a> voor meer informatie over gebruikersrollen en machtigingen.
   count_10_signature_request_emails_sent_this_month_upgrade_to_pro_to_send_unlimited_signature_request_email: "%{count} / 10 e-mails voor ondertekenverzoeken deze maand verzonden. Upgrade naar Pro om onbeperkt e-mails voor ondertekenverzoeken te verzenden."
   test_mode_emails_limit_will_be_reset_within_24_hours: Limiet voor testmodus-e-mails wordt binnen 24 uur opnieuw ingesteld.
-  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: Op een schaal van 1 tot 10, hoe tevreden bent u over het DocuSeal-product?
+  on_a_scale_of_1_to_10_how_satisfied_are_you_with_the_docuseal_product_: Op een schaal van 1 tot 10, hoe tevreden bent u over het STRSeal-product?
   tell_us_more_about_your_experience: Vertel ons meer over uw ervaring
   extremely_dissatisfied: Zeer ontevreden
   extremely_satisfied: Zeer tevreden
@@ -8393,7 +8393,7 @@ nl: &nl
   click_here_to_update_your_payment_details_and_clear_the_invoice_to_ensure_uninterrupted_service_html: <a href="%{url}" class="link">Klik hier</a> om uw betaalgegevens bij te werken en de factuur te voldoen om ononderbroken service te garanderen.
   overdue_payment: Achterstallige betaling
   your_pro_plan_has_been_suspended_due_to_unpaid_invoices_you_can_update_your_payment_details_to_settle_the_invoice_and_continue_using_docuseal_or_cancel_your_subscription: Uw Pro-abonnement is opgeschort vanwege onbetaalde facturen. U kunt uw betaalgegevens bijwerken om de factuur te voldoen en DocuSeal te blijven gebruiken of uw abonnement opzeggen.
-  get_the_docuseal_app_for_a_better_mobile_experience: Download de DocuSeal-app voor een betere mobiele ervaring.
+  get_the_docuseal_app_for_a_better_mobile_experience: Download de STRSeal-app voor een betere mobiele ervaring.
   install_app: App installeren
   manage_subscription: Abonnement beheren
   docuseal_version_security_release_is_available: "Beveiligingsupdate DocuSeal v%{version} is beschikbaar."
@@ -8408,7 +8408,7 @@ nl: &nl
   manage: Beheren
   manage_plan: Abonnement beheren
   this_submission_has_multiple_signers_which_prevents_the_use_of_a_sharing_link_html: Deze inzending heeft meerdere ondertekenaars, waardoor het gebruik van een deellink niet mogelijk is omdat onduidelijk is welke ondertekenaar verantwoordelijk is voor specifieke velden. Volg deze <a href="https://www.docuseal.com/resources/pre-filling-recipients" class="link font-bold" rel="noopener noreferrer nofollow" target="_blank">handleiding</a> om de standaardgegevens van de ondertekenaar te definiëren.
-  welcome_to_docuseal: Welkom bij DocuSeal
+  welcome_to_docuseal: Welkom bij STRSeal
   start_a_quick_tour_to_learn_how_to_create_and_send_your_first_document: Start een korte rondleiding om te leren hoe u uw eerste document maakt en verzendt
   start_tour: Rondleiding starten
   name_a_z: Naam A-Z
@@ -8485,8 +8485,8 @@ nl: &nl
   reindex: Opnieuw indexeren
   build_search_index: Zoekindex opbouwen
   require_two_factor_authentication_2fa_with_an_authenticator_app_e_g_google_authenticator_authy_all_users_signing_documents_must_pass_the_second_factor_verification_using_a_secure_code_in_addition_to_their_password: Tweeledige verificatie (2FA) met een authenticator-app (bijv. Google Authenticator, Authy) vereisen. Alle gebruikers die documenten ondertekenen moeten naast hun wachtwoord de tweede factor verifiëren met een beveiligde code.
-  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: Voeg voor audit- en traceerbaarheidsdoeleinden een unieke handtekening-ID en tijdstempel toe aan elke handtekening. Onderdeel van de 21 CFR Part 11-nalevingsinstellingen van DocuSeal.
-  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: Vereist dat de ondertekenaar vóór het voltooien van zijn handtekening een reden opgeeft (bijv. goedkeuringen, certificeringen). Onderdeel van de 21 CFR Part 11-nalevingsinstellingen van DocuSeal.
+  add_a_unique_signature_id_and_timestamp_to_each_signature_for_audit_and_traceability_purposes_along_with_the_timestamp_part_of_docuseals_21_cfr_part_11_compliance_settings: Voeg voor audit- en traceerbaarheidsdoeleinden een unieke handtekening-ID en tijdstempel toe aan elke handtekening. Onderdeel van de 21 CFR Part 11-nalevingsinstellingen van STRSeal.
+  require_signer_to_provide_a_reason_for_signing_before_completing_their_signature_e_g_approvals_certifications_part_of_docuseals_21_cfr_part_11_compliance_settings: Vereist dat de ondertekenaar vóór het voltooien van zijn handtekening een reden opgeeft (bijv. goedkeuringen, certificeringen). Onderdeel van de 21 CFR Part 11-nalevingsinstellingen van STRSeal.
   allow_signers_to_create_signatures_by_typing_their_name_instead_of_drawing_or_uploading_one: Sta ondertekenaars toe handtekeningen te maken door hun naam te typen in plaats van te tekenen of te uploaden.
   allow_signers_to_resubmit_forms_after_completion_useful_when_corrections_or_multiple_submissions_are_needed: Sta ondertekenaars toe formulieren na voltooiing opnieuw in te dienen; nuttig wanneer correcties of meerdere inzendingen nodig zijn.
   allow_recipients_to_decline_signing_a_document_the_decline_reason_notification_will_be_sent_to_the_signature_requester: Sta ontvangers toe het ondertekenen van een document te weigeren. De melding met de reden van weigering wordt naar de aanvrager van de handtekening gestuurd.
@@ -8567,7 +8567,7 @@ nl: &nl
   mcp_token_has_been_removed: Het MCP-token is verwijderd.
   enable_mcp_server: MCP-server inschakelen
   all_existing_mcp_connections_will_be_stopped_immediately_when_this_setting_is_disabled: Alle bestaande MCP-verbindingen worden onmiddellijk gestopt wanneer deze instelling wordt uitgeschakeld.
-  connect_to_docuseal_mcp: Verbinden met DocuSeal MCP
+  connect_to_docuseal_mcp: Verbinden met STRSeal MCP
   add_the_following_to_your_mcp_client_configuration: Voeg het volgende toe aan uw MCP-clientconfiguratie
   works_with_claude_desktop_cursor_windsurf_vs_code_and_any_mcp_compatible_client: Werkt met Claude Desktop, Cursor, Windsurf, VS Code en elke MCP-compatibele client.
   your_email_address_has_been_changed: Uw e-mailadres is gewijzigd
