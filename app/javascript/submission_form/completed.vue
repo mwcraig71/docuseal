@@ -100,9 +100,13 @@
       v-if="attribution"
       class="text-center mt-4"
     >
-      {{ t('powered_by') }}
       <a
-        href="https://www.docuseal.com/start"
+        href="https://strinteg.com"
+        target="_blank"
+        class="underline"
+      >STRSeal</a> by Strinteg &middot; {{ t('powered_by') }}
+      <a
+        href="https://www.docuseal.com"
         target="_blank"
         class="underline"
       >DocuSeal</a> - {{ t('open_source_documents_software') }}

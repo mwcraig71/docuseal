@@ -1,16 +1,21 @@
 # frozen_string_literal: true
 
 module Docuseal
-  PRODUCT_URL = 'https://www.docuseal.com'
+  # STRSeal is built on DocuSeal (AGPLv3). LICENSE_ADDITIONAL_TERMS requires the
+  # original DocuSeal attribution to stay in interactive user interfaces.
+  UPSTREAM_NAME = 'DocuSeal'
+  UPSTREAM_URL = 'https://www.docuseal.com'
+  PRODUCT_URL = 'https://strinteg.com'
   PRODUCT_EMAIL_URL = ENV.fetch('PRODUCT_EMAIL_URL', PRODUCT_URL)
-  NEWSLETTER_URL = "#{PRODUCT_URL}/newsletters".freeze
-  PRODUCT_NAME = 'DocuSeal'
+  NEWSLETTER_URL = "#{UPSTREAM_URL}/newsletters".freeze
+  PRODUCT_NAME = 'STRSeal'
+  COMPANY_NAME = 'Strinteg'
   DEFAULT_APP_URL = ENV.fetch('APP_URL', 'http://localhost:3000')
-  GITHUB_URL = 'https://github.com/docusealco/docuseal'
+  GITHUB_URL = 'https://github.com/mwcraig71/docuseal'
   DISCORD_URL = 'https://discord.gg/qygYCDGck9'
   TWITTER_URL = 'https://twitter.com/docusealco'
   TWITTER_HANDLE = '@docusealco'
-  CHATGPT_URL = "#{PRODUCT_URL}/chat".freeze
+  CHATGPT_URL = "#{UPSTREAM_URL}/chat".freeze
   APP_STORE_URL = 'https://apps.apple.com/us/app/docuseal-e-signature/id6823564236'
   GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.docuseal.app'
   SUPPORT_EMAIL = 'support@docuseal.com'

@@ -34,7 +34,7 @@ module Submissions
       bold_italic: FONT_BOLD_NAME
     }.freeze
 
-    SIGN_REASON = 'Signed with DocuSeal.com'
+    SIGN_REASON = 'Signed with STRSeal'
 
     UNSUPPORTED_IMAGE_TYPES = ['image/heic', 'image/avif'].freeze
 
